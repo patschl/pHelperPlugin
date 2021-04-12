@@ -2,6 +2,11 @@
 
 ## This is heavy WIP and might still contain bugs!
 
+## Usage
+
+To use this plugin, either clone or download and copy into `TurboHUD/plugins/patrick`.\
+Currently no preconfigured definitions exist, but it should not be much of an effort to add your own.\
+
 ## Definitions
 
 This helper uses a plugin based definition type system. To add definition types check existing examples in `skills/definitions`. Classes which inherit from `AbstractDefinition.cs` will automatically be added to the UI.
@@ -9,6 +14,12 @@ This helper uses a plugin based definition type system. To add definition types 
 ## Hotkeys / AutoActions
 
 Works the same way as definitions. Inherit from `hotkeys/actions/AbstractHotkeyAction.cs` or `autoactions/actions/AbstractAutoAction.cs`.
+
+## Known Bugs / Issues
+- Some weird exception randomly thrown in TurboHUD. Can't replicate and can't catch it
+- Some ComboBox settings are not set properly when editing a definition 
+- If you close the pHelper window you need to restart TurboHUD to bring it back up
+- Settings are only saved when closing the pHelper window manually
 
 ## Bugs / Feature Requests / Feedback / Donations
 
