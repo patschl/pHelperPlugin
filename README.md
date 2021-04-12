@@ -14,7 +14,8 @@ Works the same way as definitions. Inherit from `hotkeys/actions/AbstractHotkeyA
 
 To report bugs/weird behavior or just have a feature request, just [create an issue](https://github.com/petikk/pHelperPlugin/issues/new) and I will answer asap.
 If there's any questions you would like to directly discuss with me, you can message me on Discord: `patrick#7777` or [join my discord server](https://discord.gg/8fRxTDM66q)
-If you'd like to support my work you can donate here and buy me a coffee, I'd really appreciate that: [![](https://i.imgur.com/hZNNuG6.png)](https://www.buymeacoffee.com/phelper)
+If you'd like to support my work you can donate here and buy me a coffee, I'd really appreciate that: 
+[![](https://i.imgur.com/qHzwSC7.png)](https://www.buymeacoffee.com/phelper)
 
 ## Contribute
 
