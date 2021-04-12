@@ -18,8 +18,6 @@ Works the same way as definitions. Inherit from `hotkeys/actions/AbstractHotkeyA
 ## Known Bugs / Issues
 - Some weird exception randomly thrown in TurboHUD. Can't replicate and can't catch it
 - Some ComboBox settings are not set properly when editing a definition 
-- If you close the pHelper window you need to restart TurboHUD to bring it back up
-- Settings are only saved when closing the pHelper window manually
 
 ## Bugs / Feature Requests / Feedback / Donations
 
