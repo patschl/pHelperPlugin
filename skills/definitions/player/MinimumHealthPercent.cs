@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using parameters;
+    using parameters.types;
     using Plugins;
 
     public class MinimumHealthPercent : AbstractDefinition
@@ -35,7 +36,10 @@
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {
-            throw new NotImplementedException();
+            return new List<AbstractParameter>
+            {
+                SimpleParameter<int>.of(nameof(minimumHealthPercent), x => minimumHealthPercent = x)
+            };
         }
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)

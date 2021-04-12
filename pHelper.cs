@@ -24,7 +24,6 @@
         private Thread settingsThread;
 
         private IKeyEvent showSettingsWindowHotkey;
-
         public pHelper()
         {
             Enabled = true;
@@ -36,7 +35,6 @@
 
             settings = new Settings(Hud);
             skillExecutor = new SkillExecutor(settings);
-            showSettingsWindowHotkey = hud.Input.CreateKeyEvent(true, Key.F10, true, false, false);
 
             settingsThread = new Thread(() =>
             {
@@ -46,21 +44,14 @@
             settingsThread.Start();
 
             watermark = Hud.Render.CreateFont("tahoma", 8, 255, 255, 0, 0, true, false, false);
+            
+            
+            showSettingsWindowHotkey = hud.Input.CreateKeyEvent(true, Key.F10, true, false, false);
         }
 
         public void OnKeyEvent(IKeyEvent keyEvent)
         {
-            if (keyEvent.Matches(showSettingsWindowHotkey))
-                dump();
-            else
-                settings.Hotkeys.InvokeIfExists(keyEvent, Hud);
-        }
-
-        private void dump()
-        {
-            var button = Hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.RiftObelisk.EMPOWERED_CHECKBOX);
-
-            Hud.Debug($"text: {button.ReadText(Encoding.UTF8, true)} state: {button.AnimState} sno {button.TextureSno}");
+            settings.Hotkeys.InvokeIfExists(keyEvent, Hud);
         }
 
         public void PaintTopInGame(ClipState clipState)
@@ -73,7 +64,7 @@
 
         public void AfterCollect()
         {
-            if (Hud.Game.IsLoading || Hud.Game.IsPaused)
+            if (Hud.Game.IsLoading || Hud.Game.IsPaused || !D3Client.IsInForeground())
                 return;
 
             settings.AutoActions.ExecuteAutoActions(Hud);

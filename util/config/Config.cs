@@ -1,18 +1,19 @@
-﻿namespace Turbo.Plugins.Patrick.util
+﻿namespace Turbo.plugins.patrick.util.config
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
-    using autoactions;
-    using Default;
-    using hotkeys;
+    using autoactions.actions;
+    using hotkeys.actions;
     using Newtonsoft.Json;
-    using plugins.patrick.autoactions.actions;
-    using plugins.patrick.hotkeys.actions;
-    using plugins.patrick.skills;
-    using plugins.patrick.skills.definitions;
+    using Plugins;
+    using Plugins.Default;
+    using Plugins.Patrick.autoactions;
+    using Plugins.Patrick.forms;
+    using Plugins.Patrick.hotkeys;
+    using skills;
 
     public static class Config
     {
@@ -142,7 +143,7 @@
             return LoadObjectFromFile<DefinitionGroup>(configFilePath);
         }
 
-        private static void SaveDefinitionGroupsForSkill(DefinitionGroupsForSkill definitionGroupsForSkill)
+        public static void SaveDefinitionGroupsForSkill(DefinitionGroupsForSkill definitionGroupsForSkill)
         {
             var dirPath = $@"config\phelper\definitions\{definitionGroupsForSkill.heroClassName}\{definitionGroupsForSkill.skillName}\";
             Directory.CreateDirectory(dirPath);
@@ -230,6 +231,12 @@
             }
 
             return null;
+        }
+
+        public static void SetKeybindAndSaveConfig(int key, ComboBox bind)
+        {
+            Settings.Keybinds[key] = (Keys)bind.SelectedItem;
+            Config.SaveKeybinds(Settings.Keybinds);
         }
     }
 }

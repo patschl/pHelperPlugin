@@ -34,7 +34,7 @@
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
-            var resourceType = skill.SnoPower.ResourceCostTypeByRune[skill.Rune];
+            var resourceType = skill.SnoPower.ResourceCostTypeByRune[skill.Rune == 255 ? 0 : skill.Rune];
             var resourcePercent = resourceType == PowerResourceCostType.primary
                 ? hud.Game.Me.Stats.ResourcePctPri
                 : hud.Game.Me.Stats.ResourcePctSec;

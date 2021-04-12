@@ -53,7 +53,6 @@
             {
                 var controlForParameter = addedControls.First(control => control.Name.Equals(parameter.propertyName));
                 var value = ControlHelper.GetParameterValue(definition, parameter.propertyName);
-                MessageBox.Show("value: " + value);
                 ControlHelper.ControlTypeToControlSetter[controlForParameter.GetType()](value, controlForParameter);
             });
         }

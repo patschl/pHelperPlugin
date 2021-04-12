@@ -10,11 +10,15 @@
 
     public class IsBuffActiveOnHeroClass : AbstractDefinition
     {
-        public uint buff { get; set; }
+        public HeroClass heroClass { get; set; }
 
+        public uint SelectedSno { get; set; }
+        
         public string buffName { get; set; }
         
-        public HeroClass heroClass { get; set; }
+        public bool OverrideSelectedWithSno { get; set; }
+        
+        public uint Sno { get; set; }
 
         public override DefinitionType category
         {
@@ -48,17 +52,21 @@
                         if (!(input is KeyValuePair<string, ISnoPower> pair))
                             return;
                         buffName = pair.Key;
-                        buff = pair.Value.Sno;
+                        SelectedSno = pair.Value.Sno;
                     },
                     Settings.NameToSnoPower,
                     "Key"
-                )
+                ),
+                SimpleParameter<bool>.of(nameof(OverrideSelectedWithSno), x => OverrideSelectedWithSno = x),
+                SimpleParameter<int>.of(nameof(Sno), x => Sno = (uint)x)
             };
         }
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
-            return hud.Game.Players.Any(player => player.HeroClassDefinition.HeroClass == heroClass && player.Powers.BuffIsActive(buff));
+            return hud.Game.Players.Any(player => !player.IsMe && 
+                                                  player.HeroClassDefinition.HeroClass == heroClass && 
+                                                  player.Powers.BuffIsActive(OverrideSelectedWithSno ? Sno : SelectedSno));
         }
     }
 }

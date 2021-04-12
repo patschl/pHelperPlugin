@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
     public static class D3Client
@@ -31,5 +32,13 @@
             Handle = processList[0];
             return Handle;
         }
+
+        public static bool IsInForeground()
+        {
+            return GetForegroundWindow() == GetHandle().MainWindowHandle;
+        }
+        
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
     }
 }

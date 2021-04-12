@@ -93,7 +93,7 @@
             );
         }
 
-        private void InitializeDataGridView()
+        private void  InitializeDataGridView()
         {
             dgv_Definitions.RowHeadersVisible = false;
             dgv_Definitions.AllowUserToAddRows = false;

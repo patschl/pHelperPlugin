@@ -80,8 +80,8 @@
                 Location = new Point(203, (40 * itemsAbove) + (40 * yOffset)),
                 Name = simpleParameter.propertyName,
                 Font = new Font(FontFamily.GenericSansSerif, 10),
-                Value = Convert.ToDecimal(simpleParameter.defaultValue),
-                Maximum = 5000
+                Maximum = decimal.MaxValue,
+                Value = Convert.ToDecimal(simpleParameter.defaultValue)
             };
             numericUpDown.Controls.RemoveAt(0);
             numericUpDown.Width -= 4;

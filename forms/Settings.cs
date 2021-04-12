@@ -16,6 +16,7 @@
     using plugins.patrick.forms.hotkeys;
     using plugins.patrick.hotkeys.actions;
     using plugins.patrick.skills;
+    using plugins.patrick.util.config;
     using plugins.patrick.util.input;
     using plugins.patrick.util.winformutil;
     using util;
@@ -91,52 +92,53 @@
             cb_Skill1.DataSource = InputUtil.KeyboardKeys();
             cb_Skill1.SelectedItem = Keybinds[(int)ActionKey.Skill1];
             cb_Skill1.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Skill1] = (Keys)cb_Skill1.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill1, cb_Skill1);
+                    
 
             cb_Skill2.DataSource = InputUtil.KeyboardKeys();
             cb_Skill2.SelectedItem = Keybinds[(int)ActionKey.Skill2];
             cb_Skill2.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Skill2] = (Keys)cb_Skill2.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill2, cb_Skill2);
 
             cb_Skill3.DataSource = InputUtil.KeyboardKeys();
             cb_Skill3.SelectedItem = Keybinds[(int)ActionKey.Skill3];
             cb_Skill3.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Skill3] = (Keys)cb_Skill3.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill3, cb_Skill3);
 
             cb_Skill4.DataSource = InputUtil.KeyboardKeys();
             cb_Skill4.SelectedItem = Keybinds[(int)ActionKey.Skill4];
             cb_Skill4.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Skill4] = (Keys)cb_Skill4.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill4, cb_Skill4);
 
             cb_ForceStand.DataSource = InputUtil.KeyboardKeys();
             cb_ForceStand.SelectedItem = Keybinds[(int)ActionKey.Unknown];
             cb_ForceStand.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Unknown] = (Keys)cb_ForceStand.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Unknown, cb_ForceStand);
 
             cb_ForceMove.DataSource = InputUtil.KeyboardKeys().Concat(InputUtil.MouseKeys()).ToList();
             cb_ForceMove.SelectedItem = Keybinds[(int)ActionKey.Move];
             cb_ForceMove.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Move] = (Keys)cb_ForceMove.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Move, cb_ForceMove);
 
             cb_CloseWindows.DataSource = InputUtil.KeyboardKeys();
             cb_CloseWindows.SelectedItem = Keybinds[(int)ActionKey.Close];
             cb_CloseWindows.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Close] = (Keys)cb_CloseWindows.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Close, cb_CloseWindows);
 
             cb_Map.DataSource = InputUtil.KeyboardKeys();
             cb_Map.SelectedItem = Keybinds[(int)ActionKey.Map];
             cb_Map.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Map] = (Keys)cb_Map.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Map, cb_Map);
 
             cb_Potion.DataSource = InputUtil.KeyboardKeys();
             cb_Potion.SelectedItem = Keybinds[(int)ActionKey.Heal];
             cb_Potion.SelectedIndexChanged +=
-                (sender, args) => Keybinds[(int)ActionKey.Heal] = (Keys)cb_Potion.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Heal, cb_Potion);
 
             cb_Qol.DataSource = InputUtil.KeyboardKeys().Concat(InputUtil.MouseKeys()).ToList();
             cb_Qol.SelectedItem = Keybinds[Config.QOL_KEY_INDEX];
             cb_Qol.SelectedIndexChanged +=
-                (sender, args) => Keybinds[Config.QOL_KEY_INDEX] = (Keys)cb_Qol.SelectedItem;
+                (sender, args) => Config.SetKeybindAndSaveConfig(Config.QOL_KEY_INDEX, cb_Qol);
         }
 
         private void InitializeSkillEditor()
@@ -228,6 +230,8 @@
 
                 var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                 hotkey.active = isChecked;
+                
+                Config.SaveHotkeys(Hotkeys);
             };
 
             dgv_Hotkeys.CellClick += (sender, args) =>
@@ -401,6 +405,8 @@
 
             selectedSkillDefinitionGroupsDisplayValues.ResetBindings();
             tb_DefintionGroupName.Text = "";
+            
+            Config.SaveDefinitionGroupsForSkill(currentSkillDefinitionGroups);
         }
 
         private void lb_skillsWithDefinitionGroups_SelectedIndexChanged(object sender, EventArgs e)
@@ -469,8 +475,6 @@
 
             skillsWithDefinitionGroupsDisplayValues.Remove(currentlySelectedSkill);
             SnoToDefinitionGroups.Remove(currentlySelectedSkill.Sno);
-
-            lb_skillsWithDefinitionGroups.SelectedIndex = 0;
         }
 
         private void cb_DefinitionGroupActive_CheckedChanged(object sender, EventArgs e)
@@ -504,7 +508,7 @@
 
             var modified = DefinitionGroupEditor.ShowDefinitionGroupEditor(currentlySelectedDefinitionGroup, Hud);
             if (modified)
-                Config.SaveDefinitions(SnoToDefinitionGroups);
+                Config.SaveDefinitionGroupsForSkill(SnoToDefinitionGroups[currentlySelectedDefinitionGroup.sno]);
         }
 
         private void lb_DefinitionGroupsForSkill_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -518,7 +522,7 @@
             Config.SaveKeybinds(Keybinds);
             Config.SaveHotkeys(Hotkeys);
             Config.SaveAutoActions(AutoActions);
-            Hide();
+            e.Cancel = true;
         }
 
         private void pb_Donate_Click(object sender, EventArgs e)

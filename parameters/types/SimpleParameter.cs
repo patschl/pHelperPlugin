@@ -11,12 +11,13 @@
 
         private SimpleParameter(string propertyName, Action<T> setter, T defaultValue = default(T)) : base(propertyName, typeof(T))
         {
+            this.defaultValue = defaultValue;
             this.setter = setter;
         }
 
-        public static SimpleParameter<T> of(string attributeName, Action<T> setter)
+        public static SimpleParameter<T> of(string attributeName, Action<T> setter, T defaultValue = default(T))
         {
-            return new SimpleParameter<T>(attributeName, setter);
+            return new SimpleParameter<T>(attributeName, setter, defaultValue);
         }
 
         public override ParameterType parameterType

@@ -6,16 +6,16 @@
     using Plugins;
     using Plugins.Patrick.forms;
 
-    public class IsBuffActive : AbstractDefinition
+    public class IsSkillBuffActive : AbstractDefinition
     {
-        public string buffName { get; set; }
-
-        public uint SelectedSno { get; set; }
+        public string BuffName { get; set; }
         
-        public bool OverrideSelectedWithSno { get; set; }
+        public uint SelectedSno { get; set; }
         
         public uint Sno { get; set; }
         
+        public bool OverrideSelectedWithSno { get; set; }
+
         public override DefinitionType category
         {
             get
@@ -23,11 +23,12 @@
                 return DefinitionType.Player;
             }
         }
+
         public override string attributes
         {
             get
             {
-                return $"[ buff: {buffName} ]";
+                return $"[ BuffName: {BuffName}, OverrideSelectedBuff: {OverrideSelectedWithSno}, SnoId: {Sno} ]";
             }
         }
 
@@ -36,16 +37,16 @@
             return new List<AbstractParameter>
             {
                 ContextParameter.of(
-                    nameof(buffName),
+                    nameof(BuffName),
                     input =>
                     {
                         if (!(input is KeyValuePair<string, ISnoPower> pair))
                             return;
-                        buffName = pair.Key;
+                        BuffName = pair.Key;
                         SelectedSno = pair.Value.Sno;
                     },
-                    Settings.NameToSnoPower,
-                    "Key"
+                    Settings.HeroClassToSnoPowers[HeroClass.None],
+                    "NameEnglish"
                 ),
                 SimpleParameter<bool>.of(nameof(OverrideSelectedWithSno), x => OverrideSelectedWithSno = x),
                 SimpleParameter<int>.of(nameof(Sno), x => Sno = (uint)x)

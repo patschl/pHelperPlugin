@@ -18,7 +18,7 @@
             if (skill.IsOnCooldown)
                 return;
 
-            var resourceCostType = skill.SnoPower.ResourceCostTypeByRune[skill.Rune];
+            var resourceCostType = skill.SnoPower.ResourceCostTypeByRune[skill.Rune == 255 ? 0 : skill.Rune];
             var currentResource = resourceCostType == PowerResourceCostType.primary
                 ? hud.Game.Me.Stats.ResourceCurPri
                 : hud.Game.Me.Stats.ResourceCurSec;

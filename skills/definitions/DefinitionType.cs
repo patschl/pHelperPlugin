@@ -6,6 +6,7 @@
         Party,
         Player,
         Skill,
+        ItemSpecific,
         World
     }
 }
