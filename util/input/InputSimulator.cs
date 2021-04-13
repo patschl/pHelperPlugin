@@ -161,6 +161,14 @@
 
         public const int CLICK_DELAY_AFTER_MOUSE_MOVE = 15;
 
+        public static bool PostMouseMove( int x, int y)
+        {
+            var oldMousePos = GetCurrentCursorPositionInGame();
+            SetCursorPosition(new Point(x, y));
+
+            return true;
+        }
+
         public static bool PostMessageClickWithMouseMove(string key, int x, int y)
         {
             var oldMousePos = GetCurrentCursorPositionInGame();

@@ -2,15 +2,24 @@
 {
     using System.Drawing;
     using input;
-    using Plugins;
     using Plugins.Patrick.forms;
     using Plugins.Patrick.util;
+    using Plugins;
 
     public static class MethodExtensions
     {
         public static void Click(this IUiElement uiElement)
         {
             InputSimulator.PostMessageMouseClickLeft(uiElement.Rectangle.GetCenter());
+        }
+
+        public static void Click(this IItem item)
+        {
+            var offsetFloorCoordinate = item.FloorCoordinate.Offset(0, 0, (item.RadiusScaled * 3));
+            var offsetScreenCoordinate = offsetFloorCoordinate.ToScreenCoordinate();
+            var point = new Point((int)offsetScreenCoordinate.X, (int)offsetScreenCoordinate.Y);
+            // var point = new Point((int)item.ScreenCoordinate.X, (int)item.ScreenCoordinate.Y);
+            InputSimulator.PostMessageMouseClickLeft(point);
         }
 
         public static void Cast(this IPlayerSkill skill)
