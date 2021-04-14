@@ -153,15 +153,7 @@
             Logger.Initialize(Hud);
 
             cb_LogLevel.DataSource = Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>();
-            cb_LogLevel.SelectedIndexChanged += (sender, args) =>
-            {
-                Logger.LogLevel = (LogLevel)cb_LogLevel.SelectedItem;
-                Logger.debug("Loglevel changed!");
-                Logger.info("Loglevel changed!");
-                Logger.warn("Loglevel changed!");
-                Logger.error("Loglevel changed!");
-            };
-            
+            cb_LogLevel.SelectedIndexChanged += (sender, args) => Logger.LogLevel = (LogLevel)cb_LogLevel.SelectedItem;
         }
 
         private void InitializeSkillEditor()
