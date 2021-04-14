@@ -249,6 +249,7 @@
                 {
                     var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                     hotkey.RemoveKeybind();
+                    Config.SaveHotkeys(Hotkeys);
                 }
                 else if (args.ColumnIndex == dgv_Hotkeys.Columns["edit"]?.Index)
                 {
@@ -358,6 +359,7 @@
 
             var iKeyEvent = keyEvent.toIKeyEvent(Hud.Input);
             hotkey.SetKeyEvent(keyEvent, iKeyEvent);
+            Config.SaveHotkeys(Hotkeys);
         }
 
         private void b_addSkillToDefinitionGroups(object sender, EventArgs e)

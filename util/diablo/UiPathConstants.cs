@@ -42,9 +42,18 @@
 
         public static class Blacksmith
         {
-            public const string VENDOR_WINDOW = "Root.NormalLayer.vendor_dialog_mainPage.tab_4";
+            public const string UNIQUE_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_4";
+            
+            public const string SALVAGE_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_2";
             public const string SALVAGE_DIALOG = "Root.TopLayer.confirmation.subdlg";
             public const string SALVAGE_DIALOG_OK = "Root.TopLayer.confirmation.subdlg.stack.wrap.button_ok";
+            
+            public const string VENDOR_SALVAGE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper";
+
+            public const string ANVIL = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_button";
+            public const string SALVAGE_RARE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_rare_button";
+            public const string SALVAGE_BLUE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_magic_button";
+            public const string SALVAGE_WHITE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_normal_button";
         }
 
         public static class Ui

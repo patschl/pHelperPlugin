@@ -9,20 +9,9 @@
     {
         public int minimumResourcePercent { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Skill;
-            }
-        }
-        public override string attributes
-        {
-            get
-            {
-                return $"[ minimumResourcePercent: {minimumResourcePercent} ]";
-            }
-        }
+        public override DefinitionType category => DefinitionType.Skill;
+
+        public override string attributes => $"[ minimumResourcePercent: {minimumResourcePercent} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

@@ -10,18 +10,9 @@
 
     public class Act5 : AbstractHotkeyAction
     {
-        public override HotkeyType type
-        {
-            get
-            {
-                return HotkeyType.Teleport;
-            }
-        }
-        
-        protected override string GetAttributes()
-        {
-            return "";
-        }
+        public override HotkeyType type => HotkeyType.Teleport;
+
+        protected override string GetAttributes() => "";
 
         public override List<AbstractParameter> GetParameters()
         {
@@ -33,7 +24,7 @@
             return hud.Game.CurrentAct != 5;
         }
 
-        protected override void InvokeInternal(IController hud)
+        public override void Invoke(IController hud)
         {
             hud.Render.CloseChatAndOpenWindows();
             

@@ -36,9 +36,9 @@
             return active && definitions.TrueForAll(definition => definition.Handle(hud, skill));
         }
 
-        public void Invoke(IController hud, IPlayerSkill skill)
+        public bool Invoke(IController hud, IPlayerSkill skill)
         {
-            castAction.Invoke(hud, skill);
+            return castAction.Invoke(hud, skill);
         }
     }
 }

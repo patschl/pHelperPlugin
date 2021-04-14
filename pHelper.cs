@@ -22,8 +22,6 @@
         private SkillExecutor skillExecutor;
 
         private Thread settingsThread;
-
-        private IKeyEvent showSettingsWindowHotkey;
         public pHelper()
         {
             Enabled = true;
@@ -44,9 +42,6 @@
             settingsThread.Start();
 
             watermark = Hud.Render.CreateFont("tahoma", 8, 255, 255, 0, 0, true, false, false);
-            
-            
-            showSettingsWindowHotkey = hud.Input.CreateKeyEvent(true, Key.F10, true, false, false);
         }
 
         public void OnKeyEvent(IKeyEvent keyEvent)
@@ -68,19 +63,16 @@
                 return;
 
             settings.AutoActions.ExecuteAutoActions(Hud);
-
+            
+            
+            
             if (CharacterCanCast())
                 ExecuteClassMacros();
         }
 
         private void ExecuteClassMacros()
         {
-            var me = Hud.Game.Me;
-
-            if (!me.Powers.HealthPotionSkill.IsOnCooldown && me.Defense.HealthCur <= me.Defense.HealthMax * 0.35)
-                me.Powers.HealthPotionSkill.Cast();
-
-            me.Powers.CurrentSkills.ForEach(skill =>
+            Hud.Game.Me.Powers.CurrentSkills.ForEach(skill =>
                 skillExecutor.Cast(skill)
             );
         }
@@ -90,7 +82,6 @@
             return Hud.Game.IsInGame
                    && !Hud.Game.IsInTown
                    && !Hud.Game.IsLoading
-                   && !Hud.Render.UiHidden
                    && Hud.Game.MapMode == MapMode.Minimap
                    && !Hud.Game.Me.IsDead
                    && Hud.Game.Me.AnimationState != AcdAnimationState.CastingPortal;

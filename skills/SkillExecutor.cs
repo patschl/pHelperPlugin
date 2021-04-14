@@ -20,35 +20,34 @@
         }
 
         public void Cast(IPlayerSkill skill)
-        {
+        { 
             if (!settings.SnoToDefinitionGroups.TryGetValue(skill.SnoPower.Sno, out var definitionGroupsForSkill))
                 return;
 
             if (!AllowedToCast(skill))
                 return;
-                
+
             var applicableGroup =
-                definitionGroupsForSkill.definitionGroups.FirstOrDefault(definitionGroup => definitionGroup.Applicable(settings.Hud, skill));
-            applicableGroup?.Invoke(settings.Hud, skill);
+                definitionGroupsForSkill.definitionGroups.FirstOrDefault(definitionGroup =>
+                    definitionGroup.Applicable(settings.Hud, skill));
+            
+            if (applicableGroup?.Invoke(settings.Hud, skill) ?? false)
+                lastSkillExectuion[applicableGroup.sno] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         }
 
         private bool AllowedToCast(IPlayerSkill skill)
         {
             var sno = skill.SnoPower.Sno;
             var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            
+
             if (!lastSkillExectuion.ContainsKey(sno))
             {
                 lastSkillExectuion.Add(sno, now);
                 return true;
             }
-            
-            var lastExecutionTime = lastSkillExectuion[sno];
-            if (now - lastExecutionTime < MINIMUM_CAST_DELTA)
-                return false;
 
-            lastSkillExectuion[sno] = now;
-            return true;
+            var lastExecutionTime = lastSkillExectuion[sno];
+            return now - lastExecutionTime >= MINIMUM_CAST_DELTA;
         }
     }
 }

@@ -13,21 +13,9 @@
         
         public HeroClass Class { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ HeroClass: {Class}, Count: {Count} ]";
-            }
-        }
+        public override string attributes => $"[ HeroClass: {Class}, Count: {Count} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

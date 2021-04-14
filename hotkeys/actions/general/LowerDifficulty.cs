@@ -11,18 +11,9 @@
 
     public class LowerDifficulty : AbstractHotkeyAction
     {
-        public override HotkeyType type
-        {
-            get
-            {
-                return HotkeyType.General;
-            }
-        }
+        public override HotkeyType type => HotkeyType.General;
 
-        protected override string GetAttributes()
-        {
-            return "";
-        }
+        protected override string GetAttributes() => "";
 
         public override List<AbstractParameter> GetParameters()
         {
@@ -42,7 +33,7 @@
             }
         }
 
-        protected override void InvokeInternal(IController hud)
+        public override void Invoke(IController hud)
         {
             try
             {

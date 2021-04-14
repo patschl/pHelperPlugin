@@ -11,6 +11,6 @@
         
         public abstract string name { get; }
 
-        public abstract void Invoke(IController hud, IPlayerSkill skill);
+        public abstract bool Invoke(IController hud, IPlayerSkill skill);
     }
 }

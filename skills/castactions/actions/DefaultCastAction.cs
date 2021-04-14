@@ -1,7 +1,7 @@
 ﻿namespace Turbo.plugins.patrick.skills.castactions.actions
 {
+    using patrick.util.thud;
     using Plugins;
-    using util.thud;
 
     public class DefaultCastAction : AbstractCastAction
     {
@@ -13,10 +13,10 @@
             }
         }
 
-        public override void Invoke(IController hud, IPlayerSkill skill)
+        public override bool Invoke(IController hud, IPlayerSkill skill)
         {
             if (skill.IsOnCooldown)
-                return;
+                return false;
 
             var resourceCostType = skill.SnoPower.ResourceCostTypeByRune[skill.Rune == 255 ? 0 : skill.Rune];
             var currentResource = resourceCostType == PowerResourceCostType.primary
@@ -24,9 +24,10 @@
                 : hud.Game.Me.Stats.ResourceCurSec;
 
             if (currentResource < skill.GetResourceRequirement(skill.ResourceCost))
-                return;
+                return false;
 
             skill.Cast();
+            return true;
         }
     }
 }

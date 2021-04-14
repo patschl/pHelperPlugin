@@ -9,20 +9,9 @@
     {
         public string Rune { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Skill;
-            }
-        }
-        public override string attributes
-        {
-            get
-            {
-                return $"[ rune: {Rune} ]";
-            }
-        }
+        public override DefinitionType category => DefinitionType.Skill;
+
+        public override string attributes => $"[ rune: {Rune} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

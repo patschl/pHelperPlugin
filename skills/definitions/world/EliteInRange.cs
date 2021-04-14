@@ -13,21 +13,9 @@
         
         public int Range { get; set; }
         
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.World;
-            }
-        }
+        public override DefinitionType category => DefinitionType.World;
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ Minimum amount: {MinimumAmount}, Range: {Range} ]";
-            }
-        }
+        public override string attributes => $"[ Minimum amount: {MinimumAmount}, Range: {Range} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

@@ -9,21 +9,9 @@
     {
         public int playerCountInParty { get; set; }
         
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ Player count: {playerCountInParty} ]";
-            }
-        }
+        public override string attributes => $"[ Player count: {playerCountInParty} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

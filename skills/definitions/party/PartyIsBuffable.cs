@@ -7,21 +7,9 @@
 
     public class PartyIsBuffable : AbstractDefinition
     {
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override string attributes
-        {
-            get
-            {
-                return "";
-            }
-        }
+        public override string attributes => "";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {
@@ -30,10 +18,10 @@
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
-            return hud.Game.Players.All(player => !PlayerUnbuffable(hud, player));
+            return !hud.Game.Players.Any(player => PlayerUnbuffable(hud, player));
         }
 
-        private bool PlayerUnbuffable(IController hud, IPlayer player)
+        private static bool PlayerUnbuffable(IController hud, IPlayer player)
         {
             return player.Powers.BuffIsActive(hud.Sno.SnoPowers.Generic_ActorLoadingBuff.Sno) ||
                    player.Powers.BuffIsActive(hud.Sno.SnoPowers.Generic_ActorGhostedBuff.Sno) ||

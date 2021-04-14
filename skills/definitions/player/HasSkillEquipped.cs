@@ -13,21 +13,9 @@
         
         public string SkillName { get; set; }
         
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Player;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Player;
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ SkillName: {SkillName} ]";
-            }
-        }
+        public override string attributes => $"[ SkillName: {SkillName} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

@@ -10,29 +10,9 @@
     {
         public int minimumHealthPercent { get; set; }
 
-        public MinimumHealthPercent()
-        {
-        }
+        public override DefinitionType category => DefinitionType.Player;
 
-        public MinimumHealthPercent(bool inverted, int minimumHealthPercent) : base(inverted)
-        {
-            this.minimumHealthPercent = minimumHealthPercent;
-        }
-
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Player;
-            }
-        }
-        public override string attributes
-        {
-            get
-            {
-                return $"[ minimumHealthPercent: {minimumHealthPercent} ]";
-            }
-        }
+        public override string attributes => $"[ minimumHealthPercent: {minimumHealthPercent} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

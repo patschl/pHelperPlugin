@@ -23,7 +23,19 @@
                 identifierToExecutionTime[identifier] = now;
             }
 
-            new Thread(action.Invoke).Start();
+            new Thread(() => ExecuteWithErrorHandling(action)).Start();
+        }
+
+        private static void ExecuteWithErrorHandling(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception e)
+            {
+                // todo handle exception once logger is in place
+            }
         }
     }
 }

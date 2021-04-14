@@ -7,21 +7,9 @@
 
     public class AllPlayersAlive : AbstractDefinition
     {
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override string attributes
-        {
-            get
-            {
-                return "";
-            }
-        }
+        public override string attributes => "";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

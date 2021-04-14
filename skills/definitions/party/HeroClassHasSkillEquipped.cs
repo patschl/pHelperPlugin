@@ -15,22 +15,10 @@
         public uint sno { get; set; }
 
         public string SkillName { get; set; }
+        
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
-
-        public override string attributes
-        {
-            get
-            {
-                return $"[ HeroClass: {Class}, Skill: {SkillName} ]";
-            }
-        }
+        public override string attributes => $"[ HeroClass: {Class}, Skill: {SkillName} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

@@ -17,39 +17,22 @@
         public bool active { get; set; }
 
         [JsonIgnore]
-        public string action
-        {
-            get
-            {
-                return $"{type} - " + GetType().Name;
-            }
-        }
+        public string action => $"{type} - " + GetType().Name;
 
-        [JsonIgnore] public string attributes { get { return GetAttributes(); } }
+        [JsonIgnore] public string attributes => GetAttributes();
 
-        [JsonIgnore] public string hotkey { get { return keyEvent == null ? "None" : keyEvent.ToString(); } }
+        [JsonIgnore] public string hotkey => keyEvent == null ? "None" : keyEvent.ToString();
 
         [Browsable(false)] public HotkeyPopup.MyKeyEvent keyEvent { get; set; }
 
         [JsonIgnore] 
         [Browsable(false)]
-        public virtual string tooltip
-        {
-            get
-            {
-                return "No tooltip available for this hotkey!";
-            }
-        }
+        public virtual string tooltip => "No tooltip available for this hotkey!";
+            
         
         [JsonIgnore] 
         [Browsable(false)]
-        public virtual long minimumExecutionDelta
-        {
-            get
-            {
-                return 1000;
-            }
-        }
+        public virtual long minimumExecutionDelta => 1000;
 
 
         [JsonIgnore] [Browsable(false)] public IKeyEvent iKeyEvent { get; set; }
@@ -62,19 +45,7 @@
 
         public abstract bool PreconditionSatisfied(IController hud);
 
-        public void Invoke(IController hud)
-        {
-            try
-            {
-                InvokeInternal(hud);
-            }
-            catch (Exception e)
-            {
-                hud.Debug(e.ToString());
-            }
-        }
-
-        protected abstract void InvokeInternal(IController hud);
+        public abstract void Invoke(IController hud);
 
         public void SetKeyEvent(HotkeyPopup.MyKeyEvent keyEvent, IKeyEvent iKeyEvent)
         {

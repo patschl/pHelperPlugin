@@ -10,29 +10,28 @@
 
     public class IsSkillBuffActiveOnHeroClass : AbstractDefinition
     {
-        public HeroClass heroClass { get; set; }
+        public HeroClass Class { get; set; }
 
         public string BuffName { get; set; }
 
+        public int Range { get; set; }
+        
         public uint SelectedSno { get; set; }
 
-        public bool OverrideSelectedWithSno { get; set; }
+        public bool OverrideSelected { get; set; }
 
         public uint Sno { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
         public override string attributes
         {
             get
             {
-                return $"[ HeroClass: {heroClass}, BuffName: {BuffName}, OverrideSelectedBuff: {OverrideSelectedWithSno}, SnoId: {Sno} ]";
+                var assembledHeroName = Class == HeroClass.None ? "" : $"Hero: {Class}, ";
+                var assembledBuffName = OverrideSelected ? $"Sno: {Sno}" : $"Buff: {BuffName}";
+                var assembledRange = Range == 0 ? "" : $"Range: {Range}, ";
+                return $"[ {assembledHeroName}{assembledRange}{assembledBuffName} ]";
             }
         }
 
@@ -41,10 +40,11 @@
             return new List<AbstractParameter>
             {
                 ContextParameter.of(
-                    nameof(heroClass),
-                    input => heroClass = (HeroClass)input,
+                    nameof(Class),
+                    input => Class = (HeroClass)input,
                     Enum.GetValues(typeof(HeroClass)).Cast<Enum>()
                 ),
+                SimpleParameter<int>.of(nameof(Range), x => Range = x),
                 ContextParameter.of(
                     nameof(BuffName),
                     input =>
@@ -57,7 +57,7 @@
                     Settings.HeroClassToSnoPowers[HeroClass.None],
                     "NameEnglish"
                 ),
-                SimpleParameter<bool>.of(nameof(OverrideSelectedWithSno), x => OverrideSelectedWithSno = x),
+                SimpleParameter<bool>.of(nameof(OverrideSelected), x => OverrideSelected = x),
                 SimpleParameter<int>.of(nameof(Sno), x => Sno = (uint)x)
             };
         }
@@ -65,8 +65,9 @@
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
             return hud.Game.Players.Any(player => !player.IsMe &&
-                                                  player.HeroClassDefinition.HeroClass == heroClass &&
-                                                  player.Powers.BuffIsActive(OverrideSelectedWithSno ? Sno : SelectedSno));
+                                                  (Class == HeroClass.None || player.HeroClassDefinition.HeroClass == Class) &&
+                                                  (Range == 0 || player.CentralXyDistanceToMe <= Range) &&
+                                                  player.Powers.BuffIsActive(OverrideSelected ? Sno : SelectedSno));
         }
     }
 }

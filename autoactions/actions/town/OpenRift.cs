@@ -1,4 +1,4 @@
-﻿namespace Turbo.plugins.patrick.autoactions.actions.rift
+﻿namespace Turbo.plugins.patrick.autoactions.actions.town
 {
     using System.Collections.Generic;
     using parameters;
@@ -37,7 +37,7 @@
 
         public override bool Applicable(IController hud)
         {
-            return hud.Game.Me.IsInTown && hud.Render.IsUiElementVisible(UiPathConstants.RiftObelisk.OBELISK_WINDOW);
+            return hud.Game.IsInTown && hud.Render.IsUiElementVisible(UiPathConstants.RiftObelisk.OBELISK_WINDOW);
         }
 
         public override void Invoke(IController hud)

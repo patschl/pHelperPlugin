@@ -10,21 +10,9 @@
     {
         public int range { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Party;
-            }
-        }
+        public override DefinitionType category => DefinitionType.Party;
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ Range: {range} ]";
-            }
-        }
+        public override string attributes => $"[ Range: {range} ]";
 
         public override string tooltip
         {

@@ -28,15 +28,7 @@
             }
         }
 
-        [JsonIgnore] 
-        [Browsable(false)]
-        public virtual string tooltip
-        {
-            get
-            {
-                return "No tooltip available for this auto action!";
-            }
-        }
+        [JsonIgnore] [Browsable(false)] public virtual string tooltip => "No tooltip available for this auto action!";
 
         public abstract string GetAttributes();
 

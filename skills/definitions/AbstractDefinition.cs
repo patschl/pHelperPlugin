@@ -17,7 +17,7 @@
             .Select(type => (AbstractDefinition)Activator.CreateInstance(type))
             .GroupBy(def => def.category, def => def.GetType())
             .ToDictionary(def => def.Key, def => def.ToList());
-        
+
         [JsonIgnore]
         public DefinitionGroup definitionGroup { get; set; }
         

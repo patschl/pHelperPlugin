@@ -10,7 +10,7 @@
     public class CoolExampleDefinitionType : AbstractDefinition
     {
         public string Rune { get; set; }
-        
+
         public string MateWithName { get; set; }
 
         public bool BossIsSpawned { get; set; }
@@ -18,22 +18,11 @@
         public int NumberOfDhsInGame { get; set; }
 
         public SpecialArea SpecialArea { get; set; }
-        
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.Player;
-            }
-        }
 
-        public override string attributes
-        {
-            get
-            {
-                return $"[ Rune: {Rune}, BossIsSpawned: {BossIsSpawned}, Number of DHs: {NumberOfDhsInGame}, Area: {SpecialArea} ]";
-            }
-        }
+        public override DefinitionType category => DefinitionType.Player;
+
+        public override string attributes =>
+            $"[ Rune: {Rune}, BossIsSpawned: {BossIsSpawned}, Number of DHs: {NumberOfDhsInGame}, Area: {SpecialArea} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {
@@ -69,8 +58,9 @@
             var mateWithNameInGame = hud.Game.Players.Any(p => p.HeroName.Equals(MateWithName));
             var bossIsSpawnedCorrect = hud.Game.Monsters.Any(monster => monster.Rarity == ActorRarity.Boss) == BossIsSpawned;
             var numberOfDhsInGameCorrect = hud.Game.Players
-                .Where(player => !player.IsMe)
-                .Count(player => player.HeroClassDefinition.HeroClass == HeroClass.DemonHunter) == NumberOfDhsInGame;
+                                               .Where(player => !player.IsMe)
+                                               .Count(player => player.HeroClassDefinition.HeroClass == HeroClass.DemonHunter) ==
+                                           NumberOfDhsInGame;
             var correctSpecialArea = hud.Game.SpecialArea == SpecialArea;
 
 

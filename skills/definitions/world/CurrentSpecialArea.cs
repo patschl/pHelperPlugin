@@ -11,20 +11,9 @@
     {
         public SpecialArea Area { get; set; }
 
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.World;
-            }
-        }
-        public override string attributes
-        {
-            get
-            {
-                return $"[ area: {Area} ]";
-            }
-        }
+        public override DefinitionType category => DefinitionType.World;
+
+        public override string attributes => $"[ area: {Area} ]";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {

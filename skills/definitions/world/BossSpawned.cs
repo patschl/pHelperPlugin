@@ -8,20 +8,9 @@
 
     public class BossIsSpawned : AbstractDefinition
     {
-        public override DefinitionType category
-        {
-            get
-            {
-                return DefinitionType.World;
-            }
-        }
-        public override string attributes
-        {
-            get
-            {
-                return "";
-            }
-        }
+        public override DefinitionType category => DefinitionType.World;
+
+        public override string attributes => "";
 
         public override List<AbstractParameter> GetParameters(IController hud)
         {
