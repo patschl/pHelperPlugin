@@ -14,18 +14,9 @@
     {
         public bool Vitality { get; set; }
 
-        public override string tooltip
-        {
-            get
-            {
-                return "Automatically assigns mainstat in town.";
-            }
-        }
-
-        public override string GetAttributes()
-        {
-            return $"[ Vitality: {Vitality}]";
-        }
+        public override string tooltip => "Automatically assigns mainstat in town.";
+        
+        public override string GetAttributes() =>  $"[ Vitality: {Vitality}]";
 
         public override List<AbstractParameter> GetParameters()
         {
@@ -44,8 +35,8 @@
         {
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Paragon.NEW_PARAGON_BUTTON);
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Paragon.PARAGON_TAB_CORE);
-            double paragonAvailable = Double.Parse(hud.Render.GetUiElement(UiPathConstants.Paragon.PARAGON_UNSPENT_CORE).ReadText(System.Text.Encoding.ASCII, true));
-            int amountOfClicks = (int)Math.Ceiling(paragonAvailable / 100);
+            var paragonAvailable = Double.Parse(hud.Render.GetUiElement(UiPathConstants.Paragon.PARAGON_UNSPENT_CORE).ReadText(System.Text.Encoding.ASCII, true));
+            var amountOfClicks = (int) Math.Ceiling(paragonAvailable / 100);
 
             if (amountOfClicks == 0)
             {
