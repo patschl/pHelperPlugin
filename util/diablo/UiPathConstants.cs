@@ -70,5 +70,29 @@
                 "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.EmpoweredRiftToggleWrapper.EmpoweredRiftToggle.box";
             public const string ACCEPT_BUTTON = "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.accept_Button";
         }
+
+        public static class Paragon
+        {
+            public const string NEW_PARAGON_BUTTON = "Root.NormalLayer.game_notify_dialog_backgroundScreen.dlg_new_paragon.button";
+            
+            public const string PARAGON_TAB_CORE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_1";
+            public const string PARAGON_TAB_OFFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_2";
+            public const string PARAGON_TAB_DEFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_3";
+            public const string PARAGON_TAB_UTILITY = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_4";
+
+            public const string PARAGON_UNSPENT_CORE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_1";
+            public const string PARAGON_UNSPENT_OFFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_2";
+            public const string PARAGON_UNSPENT_DEFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_3";
+            public const string PARAGON_UNSPENT_UTILITY = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_4";
+
+            public const string PARAGON_BUTTON_FIRST = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus0.IncreaseStat";
+            public const string PARAGON_BUTTON_SECOND = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus1.IncreaseStat";
+            public const string PARAGON_BUTTON_THIRD = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus2.IncreaseStat";
+            public const string PARAGON_BUTTON_FOURTH =  "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus3.IncreaseStat";
+
+            public const string PARAGON_BUTTON_RESET =  "Root.NormalLayer.SkillPane_main.LayoutRoot.ParagonPointSelect.ResetParagonPointsButton";
+            public const string PARAGON_BUTTON_ACCEPT = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.AcceptParagonPointsButton";
+            public const string PARAGON_BUTTON_CLOSE =  "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.CancelParagonPointsButton";
+        }
     }
 }
