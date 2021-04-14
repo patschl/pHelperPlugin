@@ -24,7 +24,6 @@
                 SimpleParameter<int>.of(nameof(MinimumAmount), x => MinimumAmount = x),
                 SimpleParameter<int>.of(nameof(Range), x => Range = x)
             };
-            
         }
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)

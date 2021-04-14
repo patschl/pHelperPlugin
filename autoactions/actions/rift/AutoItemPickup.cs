@@ -1,5 +1,6 @@
 namespace Turbo.plugins.patrick.autoactions.actions.rift
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
@@ -14,7 +15,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
         public bool CraftingMats { get; set; }
         public bool Legendaries { get; set; }
         public int PickupRange { get; set; } = 10;
-        
+
         [JsonIgnore]
         [Browsable(false)]
         private static readonly HashSet<uint> ItemPickitSet = new HashSet<uint>
@@ -26,6 +27,10 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
             2835237830, // Greater Rift Keystone
             2073430088 // Forgotten Soul
         };
+
+        [JsonIgnore]
+        [Browsable(false)]
+        private bool twoUnitSlotAvailable = true; 
         
         public override string tooltip => "Automatically picks up configured items.";
 
@@ -48,15 +53,17 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
 
         public override bool Applicable(IController hud)
         {
+            CheckInventorySpace(hud);
+
             return hud.Game.Me.IsInGame && !hud.Game.Me.IsDead;
         }
 
         public override void Invoke(IController hud)
         {
             hud.Game.Items.ToList()
-                .Where(x => x.Location == ItemLocation.Floor && x.IsOnScreen && Matches(x) && x.CentralXyDistanceToMe < PickupRange)
+                .Where(x => x.Location == ItemLocation.Floor && Matches(x) && x.CentralXyDistanceToMe < PickupRange)
                 .OrderBy(x => x.CentralXyDistanceToMe)
-                .First()?.Click();
+                .First(item => !item.IsLegendary || (item.SnoItem.ItemHeight == 1 && hud.Game.Me.InventorySpaceTotal > 1) || twoUnitSlotAvailable)?.Click();
         }
 
         private bool Matches(IItem item)
@@ -70,6 +77,39 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
                 matches |= item.IsLegendary;
             
             return matches;
+        }
+
+        private void CheckInventorySpace(IController hud)
+        {
+            if (!Legendaries || hud.Game.Me.InventorySpaceTotal > 30)
+            {
+                twoUnitSlotAvailable = true;
+                return;
+            }
+
+            var inventoryCoords = new Dictionary<int, List<int>>();
+            hud.Inventory.ItemsInInventory.ToList().ForEach(item =>
+            {
+                if (inventoryCoords.ContainsKey(item.InventoryX))
+                    inventoryCoords[item.InventoryX].Add(item.InventoryY);
+                else 
+                    inventoryCoords.Add(item.InventoryX, new List<int>{item.InventoryY});
+                
+                if (item.SnoItem.ItemHeight == 2)
+                    inventoryCoords[item.InventoryX].Add(item.InventoryY + 1);
+            });
+
+            twoUnitSlotAvailable = inventoryCoords.Count < 10;
+
+            if (!twoUnitSlotAvailable)
+                twoUnitSlotAvailable = inventoryCoords.Any(item =>
+                {
+                    for (var i = 0; i < 5; i++)
+                        if (!item.Value.Contains(i) && !item.Value.Contains(i + 1))
+                            return true;
+
+                    return false;
+                });
         }
     }
 }
