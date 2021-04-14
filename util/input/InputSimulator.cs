@@ -44,7 +44,7 @@
             return PostMessageKeyDown(InputUtil.StringToVkCode(key));
         }
 
-        private static bool PostMessageKeyDown(Keys vkcode)
+        public static bool PostMessageKeyDown(Keys vkcode)
         {
             if (!IsMouseKey(vkcode))
             {
