@@ -84,7 +84,8 @@
                    && !Hud.Game.IsLoading
                    && Hud.Game.MapMode == MapMode.Minimap
                    && !Hud.Game.Me.IsDead
-                   && Hud.Game.Me.AnimationState != AcdAnimationState.CastingPortal;
+                   && Hud.Game.Me.AnimationState != AcdAnimationState.CastingPortal
+                   && !Hud.Render.IsUiElementVisible(UiPathConstants.Ui.CHAT_INPUT);
         }
     }
 }
