@@ -8,18 +8,9 @@
 
     public class AcceptSalvageDialog : AbstractAutoAction
     {
-        public override string tooltip
-        {
-            get
-            {
-                return "CAREFUL! Will automatically accept blacksmith's salvage dialog.";
-            }
-        }
+        public override string tooltip => "CAREFUL! Will automatically accept blacksmith's salvage dialog.";
 
-        public override string GetAttributes()
-        {
-            return "";
-        }
+        public override string GetAttributes() => "";
 
         public override long minimumExecutionDelta => 72;
 
