@@ -13,18 +13,9 @@
         
         public bool Empowered { get; set; }
 
-        public override string tooltip
-        {
-            get
-            {
-                return "Automatically opens a rift when clicking on the obelisk.";
-            }
-        }
+        public override string tooltip => "Automatically opens a rift when clicking on the obelisk.";
 
-        public override string GetAttributes()
-        {
-            return $"[ GreaterRift: {GreaterRift}, Empowered: {Empowered} ]";
-        }
+        public override string GetAttributes() => $"[ GreaterRift: {GreaterRift}, Empowered: {Empowered} ]";
 
         public override List<AbstractParameter> GetParameters()
         {
