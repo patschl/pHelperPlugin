@@ -18,7 +18,6 @@
             var offsetFloorCoordinate = item.FloorCoordinate.Offset(0, 0, (item.RadiusScaled * 3));
             var offsetScreenCoordinate = offsetFloorCoordinate.ToScreenCoordinate();
             var point = new Point((int)offsetScreenCoordinate.X, (int)offsetScreenCoordinate.Y);
-            // var point = new Point((int)item.ScreenCoordinate.X, (int)item.ScreenCoordinate.Y);
             InputSimulator.PostMessageMouseClickLeft(point);
         }
 

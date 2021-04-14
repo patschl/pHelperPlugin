@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using logger;
 
     public class ThreadedExecutor
     {
@@ -34,7 +35,7 @@
             }
             catch (Exception e)
             {
-                // todo handle exception once logger is in place
+                Logger.error("ThreadedExecutor execution error: " + e);
             }
         }
     }

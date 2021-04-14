@@ -7,6 +7,7 @@
     using System.Windows.Forms;
     using autoactions.actions;
     using hotkeys.actions;
+    using logger;
     using Newtonsoft.Json;
     using Plugins;
     using Plugins.Default;
@@ -224,10 +225,10 @@
             catch (Exception e)
             {
                 MessageBox.Show(
-                    $"Failed to load definition group from file: {filePath}! Make sure it's format is correct and all configured definition types exist.",
+                    $"Failed to load definition group from file: {filePath}! Check log for further information",
                     "Failed to load config", MessageBoxButtons.OK);
 
-                MessageBox.Show(e.ToString());
+                Logger.error($"Failed to load definition group: {filePath}. Reason: {e}");
             }
 
             return null;
@@ -236,7 +237,7 @@
         public static void SetKeybindAndSaveConfig(int key, ComboBox bind)
         {
             Settings.Keybinds[key] = (Keys)bind.SelectedItem;
-            Config.SaveKeybinds(Settings.Keybinds);
+            SaveKeybinds(Settings.Keybinds);
         }
     }
 }

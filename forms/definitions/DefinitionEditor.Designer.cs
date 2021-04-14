@@ -44,10 +44,11 @@
             // cb_DefinitionType
             // 
             this.cb_DefinitionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_DefinitionType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.cb_DefinitionType.FormattingEnabled = true;
             this.cb_DefinitionType.Location = new System.Drawing.Point(127, 80);
             this.cb_DefinitionType.Name = "cb_DefinitionType";
-            this.cb_DefinitionType.Size = new System.Drawing.Size(226, 21);
+            this.cb_DefinitionType.Size = new System.Drawing.Size(226, 24);
             this.cb_DefinitionType.TabIndex = 0;
             this.cb_DefinitionType.SelectedIndexChanged += new System.EventHandler(this.cb_DefinitionType_SelectedIndexChanged);
             // 
@@ -102,10 +103,11 @@
             // cb_Group
             // 
             this.cb_Group.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Group.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.cb_Group.FormattingEnabled = true;
             this.cb_Group.Location = new System.Drawing.Point(127, 40);
             this.cb_Group.Name = "cb_Group";
-            this.cb_Group.Size = new System.Drawing.Size(139, 21);
+            this.cb_Group.Size = new System.Drawing.Size(139, 24);
             this.cb_Group.TabIndex = 6;
             this.cb_Group.SelectedIndexChanged += new System.EventHandler(this.cb_Group_SelectedIndexChanged);
             // 

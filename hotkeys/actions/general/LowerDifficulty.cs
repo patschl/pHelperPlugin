@@ -17,7 +17,7 @@
 
         public override List<AbstractParameter> GetParameters()
         {
-            throw new NotImplementedException();
+            return new List<AbstractParameter>();
         }
 
         public override bool PreconditionSatisfied(IController hud)
@@ -25,13 +25,7 @@
             return hud.Game.GameDifficulty != GameDifficulty.n;
         }
 
-        public override string tooltip
-        {
-            get
-            {
-                return "Lowers game difficulty to normal.";
-            }
-        }
+        public override string tooltip => "Lowers game difficulty to normal.";
 
         public override void Invoke(IController hud)
         {

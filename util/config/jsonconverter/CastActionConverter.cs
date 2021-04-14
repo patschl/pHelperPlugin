@@ -11,9 +11,7 @@
         public override void WriteJson(JsonWriter writer, AbstractCastAction value, JsonSerializer serializer)
         {
             var token = JObject.FromObject(value);
-
             token.AddFirst(new JProperty("type", value.GetType().ToString()));
-
             token.WriteTo(writer);
         }
 

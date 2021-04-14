@@ -6,6 +6,7 @@
     using diablo;
     using executors;
     using input;
+    using logger;
     using Plugins;
     using Plugins.Patrick.forms;
     using Plugins.Patrick.util;
@@ -23,7 +24,7 @@
             var result = new TimedRetryExecutor(maxWaitTimeMs, intervalMs, condition).Invoke();
 
             if (!result)
-                throw new InvalidOperationException("Failed to execute macro! Condition was not met after max time elapsed: " + condition.Method);
+                Logger.warn("WaitForConditionOrAbortHotkeyEvent - Condition was not met after max time elapsed: " + condition.Method);
         }
 
         public static void CloseChatAndOpenWindows(this IRenderController renderController)

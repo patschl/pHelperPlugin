@@ -54,6 +54,8 @@
             this.tab_AutoActions = new System.Windows.Forms.TabPage();
             this.dgv_AutoActions = new System.Windows.Forms.DataGridView();
             this.tab_Settings = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cb_LogLevel = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_Potion = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -320,6 +322,8 @@
             // 
             // tab_Settings
             // 
+            this.tab_Settings.Controls.Add(this.label14);
+            this.tab_Settings.Controls.Add(this.cb_LogLevel);
             this.tab_Settings.Controls.Add(this.groupBox1);
             this.tab_Settings.Location = new System.Drawing.Point(4, 22);
             this.tab_Settings.Name = "tab_Settings";
@@ -328,6 +332,25 @@
             this.tab_Settings.TabIndex = 1;
             this.tab_Settings.Text = "Settings";
             this.tab_Settings.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label14.Location = new System.Drawing.Point(1, 458);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(74, 25);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "LogLevel";
+            // 
+            // cb_LogLevel
+            // 
+            this.cb_LogLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_LogLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.cb_LogLevel.FormattingEnabled = true;
+            this.cb_LogLevel.Location = new System.Drawing.Point(81, 457);
+            this.cb_LogLevel.Name = "cb_LogLevel";
+            this.cb_LogLevel.Size = new System.Drawing.Size(90, 23);
+            this.cb_LogLevel.TabIndex = 5;
             // 
             // groupBox1
             // 
@@ -620,6 +643,7 @@
         private System.Windows.Forms.CheckBox cb_DefinitionGroupActive;
         private System.Windows.Forms.ComboBox cb_ForceMove;
         private System.Windows.Forms.ComboBox cb_ForceStand;
+        private System.Windows.Forms.ComboBox cb_LogLevel;
         private System.Windows.Forms.ComboBox cb_Map;
         private System.Windows.Forms.ComboBox cb_Potion;
         private System.Windows.Forms.ComboBox cb_Qol;
@@ -638,6 +662,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

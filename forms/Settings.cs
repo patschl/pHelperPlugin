@@ -18,6 +18,7 @@
     using plugins.patrick.skills;
     using plugins.patrick.util.config;
     using plugins.patrick.util.input;
+    using plugins.patrick.util.logger;
     using plugins.patrick.util.winformutil;
     using util;
 
@@ -53,14 +54,15 @@
         public Settings(IController hud)
         {
             Hud = hud;
+
             InitializeComponent();
             Icon = Icon.ExtractAssociatedIcon(@"plugins\patrick\resource\icon.ico");
             pb_Donate.Image = Image.FromFile(@"plugins\patrick\resource\donate.jpg");
-
         }
 
         private void OnLoad(object sender, EventArgs e)
         {
+            InitializeLogger();
             LoadConfig();
             InitializeSkillEditor();
             InitializeHotkeys();
@@ -89,11 +91,16 @@
 
         private void InitializeSettings()
         {
+            InitializeKeybinds();
+        }
+
+        private void InitializeKeybinds()
+        {
             cb_Skill1.DataSource = InputUtil.KeyboardKeys();
             cb_Skill1.SelectedItem = Keybinds[(int)ActionKey.Skill1];
             cb_Skill1.SelectedIndexChanged +=
                 (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill1, cb_Skill1);
-                    
+
 
             cb_Skill2.DataSource = InputUtil.KeyboardKeys();
             cb_Skill2.SelectedItem = Keybinds[(int)ActionKey.Skill2];
@@ -139,6 +146,22 @@
             cb_Qol.SelectedItem = Keybinds[Config.QOL_KEY_INDEX];
             cb_Qol.SelectedIndexChanged +=
                 (sender, args) => Config.SetKeybindAndSaveConfig(Config.QOL_KEY_INDEX, cb_Qol);
+        }
+
+        private void InitializeLogger()
+        {
+            Logger.Initialize(Hud);
+
+            cb_LogLevel.DataSource = Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>();
+            cb_LogLevel.SelectedIndexChanged += (sender, args) =>
+            {
+                Logger.LogLevel = (LogLevel)cb_LogLevel.SelectedItem;
+                Logger.debug("Loglevel changed!");
+                Logger.info("Loglevel changed!");
+                Logger.warn("Loglevel changed!");
+                Logger.error("Loglevel changed!");
+            };
+            
         }
 
         private void InitializeSkillEditor()
@@ -230,7 +253,7 @@
 
                 var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                 hotkey.active = isChecked;
-                
+
                 Config.SaveHotkeys(Hotkeys);
             };
 
@@ -256,7 +279,7 @@
                     var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                     if (string.IsNullOrWhiteSpace(hotkey.attributes))
                         return;
-                    
+
                     if (HotkeyEditor.EditHotkeyAction(hotkey))
                         Config.SaveHotkeys(Hotkeys);
                 }
@@ -407,7 +430,7 @@
 
             selectedSkillDefinitionGroupsDisplayValues.ResetBindings();
             tb_DefintionGroupName.Text = "";
-            
+
             Config.SaveDefinitionGroupsForSkill(currentSkillDefinitionGroups);
         }
 
