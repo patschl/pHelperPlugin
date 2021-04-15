@@ -13,6 +13,11 @@
             InputSimulator.PostMessageMouseClickLeft(uiElement.Rectangle.GetCenter());
         }
 
+        public static void RightClick(this IUiElement uiElement)
+        {
+            InputSimulator.PostMessageMouseClickRight(uiElement.Rectangle.GetCenter());
+        }
+
         public static void Click(this IItem item)
         {
             var offsetFloorCoordinate = item.FloorCoordinate.Offset(0, 0, (item.RadiusScaled * 3));

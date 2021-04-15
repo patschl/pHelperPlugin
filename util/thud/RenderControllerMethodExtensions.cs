@@ -13,10 +13,18 @@
 
     public static class RenderControllerFunctions
     {
-        public static void WaitForVisiblityAndClickOrAbortHotkeyEvent(this IRenderController renderController, string path, int maxWaitTimeMs = 2000, int intervalMs = 25)
+        public static void WaitForVisiblityAndRightClickOrAbortHotkeyEvent(this IRenderController renderController, string path, int maxWaitTimeMs = 2000, int intervalMs = 25)
+        {
+            WaitForVisiblityAndClickOrAbortHotkeyEvent(renderController, path, maxWaitTimeMs, intervalMs, false);
+        }
+
+        public static void WaitForVisiblityAndClickOrAbortHotkeyEvent(this IRenderController renderController, string path, int maxWaitTimeMs = 2000, int intervalMs = 25, bool leftClick = true)
         {
             WaitForConditionOrAbortHotkeyEvent(() => renderController.IsUiElementVisible(path), maxWaitTimeMs, intervalMs);
-            renderController.GetOrRegisterAndGetUiElement(path).Click();
+            if(leftClick)
+                renderController.GetOrRegisterAndGetUiElement(path).Click();
+            else
+                renderController.GetOrRegisterAndGetUiElement(path).RightClick();
         }
 
         public static void WaitForConditionOrAbortHotkeyEvent(Func<bool> condition, int maxWaitTimeMs = 2000, int intervalMs = 25)
