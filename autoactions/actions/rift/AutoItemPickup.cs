@@ -63,7 +63,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
             hud.Game.Items.ToList()
                 .Where(x => x.Location == ItemLocation.Floor && Matches(x) && x.CentralXyDistanceToMe < PickupRange)
                 .OrderBy(x => x.CentralXyDistanceToMe)
-                .First(item => !item.IsLegendary || (item.SnoItem.ItemHeight == 1 && hud.Game.Me.InventorySpaceTotal > 1) || twoUnitSlotAvailable)?.Click();
+                .First(item => !item.IsLegendary || (item.SnoItem.ItemHeight == 1 && hud.Game.Me.InventorySpaceTotal - hud.Game.InventorySpaceUsed > 1) || twoUnitSlotAvailable)?.Click();
         }
 
         private bool Matches(IItem item)
@@ -81,7 +81,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
 
         private void CheckInventorySpace(IController hud)
         {
-            if (!Legendaries || hud.Game.Me.InventorySpaceTotal > 30)
+            if (!Legendaries || (hud.Game.Me.InventorySpaceTotal - hud.Game.InventorySpaceUsed > 30))
             {
                 twoUnitSlotAvailable = true;
                 return;
