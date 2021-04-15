@@ -33,8 +33,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             {"Amulet", new[] {UiPathConstants.Vendor.SECOND_ITEM, UiPathConstants.Vendor.THIRD_TAB, null}}
         };
 
-        public string Item { get; set; }
-
+        public string Item { get; set; } = "1-H Weapon";
 
         public override string tooltip => "Auto gamble items at Kadala.";
 
@@ -46,13 +45,8 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             {
                 ContextParameter.of(
                     nameof(Item),
-                    x =>
-                    {
-                        if (!(x is KeyValuePair<string, string[]> pair)) return;
-                        Item = pair.Key;
-                    },
-                    ItemLocationMapping,
-                    "Key"
+                    x => Item = (string) x,
+                    ItemLocationMapping.Keys
                 ),
             };
         }
@@ -60,9 +54,9 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
         public override bool Applicable(IController hud)
         {
             return hud.Game.Me.IsInTown
-                   && isShopOpen(hud)
+                   && IsShopOpen(hud)
                    && hud.Render.GetUiElement(UiPathConstants.Vendor.CURRENCY_TYPE)
-                       .ReadText(Encoding.ASCII, removeColors: true).Contains("icon:x1_shard");
+                       .ReadText(Encoding.ASCII, true).Contains("icon:x1_shard");
         }
 
         //Since a user can close the Kadala interface unexpectedly we check before each action if the shop is still open
@@ -70,34 +64,31 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
         public override void Invoke(IController hud)
         {
             //Sometimes it doesnt properly register the first click, double clicking just to be sure prevents any accidental buys
-            var ItemLocation = ItemLocationMapping[Item];
-            hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(ItemLocation[1]);
-            hud.Render.GetOrRegisterAndGetUiElement(ItemLocation[1]).Click();
+            var itemLocation = ItemLocationMapping[Item];
+            hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(itemLocation[1]);
+            hud.Render.GetOrRegisterAndGetUiElement(itemLocation[1]).Click();
 
             var maxItems = hud.Game.Me.InventorySpaceTotal - hud.Game.InventorySpaceUsed;
-            if (ItemLocation[2] != null)
+            if (itemLocation[2] != null)
             {
                 //This could cause a few extra clicks but its cheaper than checking for 2size inventory spaces
                 maxItems = hud.Game.Me.InventorySpaceTotal / 2;
             }
 
-            hud.Render.WaitForVisiblityAndRightClickOrAbortHotkeyEvent(ItemLocation[0]);
+            hud.Render.WaitForVisiblityAndRightClickOrAbortHotkeyEvent(itemLocation[0]);
             for (var i = 0; i < --maxItems; i++)
             {
-                if (!isShopOpen(hud))
+                if (!IsShopOpen(hud))
                     return;
-                hud.Render.GetOrRegisterAndGetUiElement(ItemLocation[0]).RightClick();
+                hud.Render.GetOrRegisterAndGetUiElement(itemLocation[0]).RightClick();
             }
 
-            if (isShopOpen(hud))
-            {
+            if (IsShopOpen(hud))
                 hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.Vendor.CLOSE_BUTTON).Click();
-            }
+            
+            hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Buttons.INVENTORY);
         }
 
-        private bool isShopOpen(IController hud)
-        {
-            return hud.Render.IsUiElementVisible(UiPathConstants.Vendor.CURRENCY_TYPE);
-        }
+        private static bool IsShopOpen(IController hud) => hud.Render.IsUiElementVisible(UiPathConstants.Vendor.CURRENCY_TYPE);
     }
 }

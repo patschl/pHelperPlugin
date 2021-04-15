@@ -55,7 +55,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
         {
             CheckInventorySpace(hud);
 
-            return hud.Game.Me.IsInGame && !hud.Game.Me.IsDead;
+            return hud.Game.Me.IsInGame && !hud.Game.Me.IsDead && hud.Game.Items.ToList().Any(item => item.CentralXyDistanceToMe < PickupRange);
         }
 
         public override void Invoke(IController hud)

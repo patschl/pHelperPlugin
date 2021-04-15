@@ -20,13 +20,7 @@
         
         [JsonIgnore] 
         [Browsable(false)]
-        public virtual long minimumExecutionDelta
-        {
-            get
-            {
-                return 1000;
-            }
-        }
+        public virtual long minimumExecutionDelta => 1000;
 
         [JsonIgnore] [Browsable(false)] public virtual string tooltip => "No tooltip available for this auto action!";
 

@@ -8,7 +8,7 @@
 
     public class CoeRotation : AbstractDefinition
     {
-        [JsonIgnore] public static Dictionary<string, int> CoeElementToIndex = new Dictionary<string, int>
+        [JsonIgnore] private static readonly Dictionary<string, int> CoeElementToIndex = new Dictionary<string, int>
         {
             {"Cold", 1},
             {"Arcane", 2},
@@ -20,9 +20,7 @@
         };
 
         public string Element { get; set; }
-
-        public int ElementIndex { get; set; }
-
+        
         public int TimeLeft { get; set; }
 
         public override DefinitionType category => DefinitionType.ItemSpecific;
@@ -35,14 +33,8 @@
             {
                 ContextParameter.of(
                     nameof(Element),
-                    x =>
-                    {
-                        if (!(x is KeyValuePair<string, int> pair)) return;
-                        Element = pair.Key;
-                        ElementIndex = pair.Value;
-                    },
-                    CoeElementToIndex,
-                    "Key"
+                    x => Element = (string)x,
+                    CoeElementToIndex.Keys
                 ),
                 SimpleParameter<int>.of(nameof(TimeLeft), x => TimeLeft = x, 4000)
             };
@@ -54,10 +46,11 @@
                 return false;
 
             var buff = hud.Game.Me.Powers.GetBuff(hud.Sno.SnoPowers.ConventionOfElements.Sno);
-            if (buff.IconCounts[ElementIndex] == 0)
+            var elementIndex = CoeElementToIndex[Element];
+            if (buff.IconCounts[elementIndex] == 0)
                 return false;
 
-            return buff.TimeLeftSeconds[ElementIndex] < TimeLeft / 1000.0;
+            return buff.TimeLeftSeconds[elementIndex] < TimeLeft / 1000.0;
         }
     }
 }

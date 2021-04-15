@@ -13,15 +13,17 @@
 
     public static class RenderControllerFunctions
     {
-        public static void WaitForVisiblityAndRightClickOrAbortHotkeyEvent(this IRenderController renderController, string path, int maxWaitTimeMs = 2000, int intervalMs = 25)
+        public static void WaitForVisiblityAndRightClickOrAbortHotkeyEvent(this IRenderController renderController, string path,
+            int maxWaitTimeMs = 2000, int intervalMs = 25)
         {
             WaitForVisiblityAndClickOrAbortHotkeyEvent(renderController, path, maxWaitTimeMs, intervalMs, false);
         }
 
-        public static void WaitForVisiblityAndClickOrAbortHotkeyEvent(this IRenderController renderController, string path, int maxWaitTimeMs = 2000, int intervalMs = 25, bool leftClick = true)
+        public static void WaitForVisiblityAndClickOrAbortHotkeyEvent(this IRenderController renderController, string path,
+            int maxWaitTimeMs = 2000, int intervalMs = 25, bool leftClick = true)
         {
             WaitForConditionOrAbortHotkeyEvent(() => renderController.IsUiElementVisible(path), maxWaitTimeMs, intervalMs);
-            if(leftClick)
+            if (leftClick)
                 renderController.GetOrRegisterAndGetUiElement(path).Click();
             else
                 renderController.GetOrRegisterAndGetUiElement(path).RightClick();
@@ -55,7 +57,7 @@
 
         public static IUiElement GetOrRegisterAndGetUiElement(this IRenderController renderController, string path)
         {
-            var layer = renderController.GetUiElement(path) ?? 
+            var layer = renderController.GetUiElement(path) ??
                         renderController.RegisterUiElement(path, null, null);
 
             return layer;

@@ -72,6 +72,8 @@
             }
             
             hasSalvaged = true;
+            
+            hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Blacksmith.ANVIL);
         }
     }
 }
