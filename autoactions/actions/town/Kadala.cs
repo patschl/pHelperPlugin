@@ -35,7 +35,6 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
 
         public string Item { get; set; }
 
-        public string[] ItemLocation { get; set; }
 
         public override string tooltip => "Auto gamble items at Kadala.";
 
