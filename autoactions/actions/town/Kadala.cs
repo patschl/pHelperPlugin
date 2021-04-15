@@ -72,7 +72,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             if (itemLocation[2] != null)
             {
                 //This could cause a few extra clicks but its cheaper than checking for 2size inventory spaces
-                maxItems = hud.Game.Me.InventorySpaceTotal / 2;
+                maxItems = maxItems / 2;
             }
 
             hud.Render.WaitForVisiblityAndRightClickOrAbortHotkeyEvent(itemLocation[0]);
