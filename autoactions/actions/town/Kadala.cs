@@ -86,7 +86,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             for (var i = 0; i < --maxItems; i++)
             {
                 if (!isShopOpen(hud))
-                    break;
+                    return;
                 hud.Render.GetOrRegisterAndGetUiElement(ItemLocation[0]).RightClick();
             }
 
