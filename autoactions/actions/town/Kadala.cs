@@ -61,13 +61,10 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
 
         public override bool Applicable(IController hud)
         {
-            if (hud.Game.Me.IsInTown
-                && isShopOpen(hud)
-                && hud.Render.GetUiElement(UiPathConstants.Vendor.CURRENCY_TYPE)
-                    .ReadText(Encoding.ASCII, removeColors: true).Contains("icon:x1_shard"))
-                return true;
-
-            return false;
+            return hud.Game.Me.IsInTown
+                   && isShopOpen(hud)
+                   && hud.Render.GetUiElement(UiPathConstants.Vendor.CURRENCY_TYPE)
+                       .ReadText(Encoding.ASCII, removeColors: true).Contains("icon:x1_shard");
         }
 
         //Since a user can close the Kadala interface unexpectedly we check before each action if the shop is still open
