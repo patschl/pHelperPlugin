@@ -72,6 +72,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
         public override void Invoke(IController hud)
         {
             //Sometimes it doesnt properly register the first click, double clicking just to be sure prevents any accidental buys
+            var ItemLocation = ItemLocationMapping[Item];
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(ItemLocation[1]);
             hud.Render.GetOrRegisterAndGetUiElement(ItemLocation[1]).Click();
 
