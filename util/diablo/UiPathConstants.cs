@@ -94,5 +94,31 @@
             public const string PARAGON_BUTTON_ACCEPT = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.AcceptParagonPointsButton";
             public const string PARAGON_BUTTON_CLOSE =  "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.CancelParagonPointsButton";
         }
+
+        public static class Vendor
+        {
+            public const string FIRST_TAB = "Root.NormalLayer.shop_dialog_mainPage.tab_0";
+            public const string SECOND_TAB = "Root.NormalLayer.shop_dialog_mainPage.tab_1";
+            public const string THIRD_TAB = "Root.NormalLayer.shop_dialog_mainPage.tab_2";
+            public const string FOURTH_TAB = "Root.NormalLayer.shop_dialog_mainPage.tab_3";
+            public const string FIFTH_TAB = "Root.NormalLayer.shop_dialog_mainPage.tab_4";
+
+            public const string FIRST_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 0";
+            public const string SECOND_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 0";
+            public const string THIRD_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 1";
+            public const string FOURTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 1";
+            public const string FIFTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 2";
+            public const string SIXTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 2";
+            public const string SEVENTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 3";
+            public const string EIGHTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 3";
+            public const string NINTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 4";
+            public const string TENTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 4";
+            public const string ELEVENTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 0 5";
+            public const string TWELFTH_ITEM = "Root.NormalLayer.shop_dialog_mainPage.shop_item_region.item 1 5";
+
+            public const string CURRENCY_TYPE = "Root.NormalLayer.shop_dialog_mainPage.gold_text";
+
+            public const string CLOSE_BUTTON = "Root.NormalLayer.shop_dialog_mainPage.button_exit";
+        }
     }
 }
