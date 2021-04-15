@@ -51,7 +51,6 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
                     {
                         if (!(x is KeyValuePair<string, string[]> pair)) return;
                         Item = pair.Key;
-                        ItemLocation = pair.Value;
                     },
                     ItemLocationMapping,
                     "Key"
