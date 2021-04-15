@@ -39,7 +39,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
 
         public override string tooltip => "Auto gamble items at Kadala.";
 
-        public override string GetAttributes() => $"[ Item: {Item}, ItemLocation: {ItemLocation} ]";
+        public override string GetAttributes() => $"[ Item: {Item} ]";
 
         public override List<AbstractParameter> GetParameters()
         {
