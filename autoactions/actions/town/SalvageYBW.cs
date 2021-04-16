@@ -1,11 +1,11 @@
 ﻿namespace Turbo.plugins.patrick.autoactions.actions.town
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using parameters;
+    using System;
     using parameters.types;
+    using parameters;
     using Plugins;
     using util.diablo;
     using util.thud;
@@ -17,8 +17,6 @@
         public bool Blues { get; set; }
 
         public bool Whites { get; set; }
-
-        private bool hasSalvaged;
 
         public override string tooltip => "Automatically salvages Yellow/Blue/White items when visiting the blacksmith";
 
@@ -42,15 +40,13 @@
                 return false;
 
             var blacksmithOpen = hud.Render.IsUiElementVisible(UiPathConstants.Blacksmith.UNIQUE_PAGE);
-            if (!blacksmithOpen)
-                hasSalvaged = false;
 
             return blacksmithOpen;
         }
 
         public override void Invoke(IController hud)
         {
-            if (hasSalvaged)
+            if (!hud.Inventory.ItemsInInventory.ToList().Any(x => x.IsRare || x.IsMagic || x.IsNormal && x.SnoItem.Kind == ItemKind.loot))
                 return;
 
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Blacksmith.SALVAGE_PAGE, 500);
@@ -70,9 +66,7 @@
                 hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Blacksmith.SALVAGE_WHITE, 500);
                 hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Blacksmith.SALVAGE_DIALOG_OK, 500);
             }
-            
-            hasSalvaged = true;
-            
+
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Blacksmith.ANVIL);
         }
     }
