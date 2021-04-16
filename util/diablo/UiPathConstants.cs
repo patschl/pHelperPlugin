@@ -55,6 +55,9 @@
             public const string SALVAGE_RARE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_rare_button";
             public const string SALVAGE_BLUE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_magic_button";
             public const string SALVAGE_WHITE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_normal_button";
+
+            public const string REPAIR_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_3";
+            public const string REPAIR_ALL = "Root.NormalLayer.vendor_dialog_mainPage.repair_dialog.RepairAll";
         }
 
         public static class Ui
