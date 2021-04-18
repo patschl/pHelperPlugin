@@ -41,6 +41,8 @@
         
         public static volatile bool Active = true;
 
+        public Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> profileToSkillDefinitionGroups;
+        
         public Dictionary<uint, DefinitionGroupsForSkill> SnoToDefinitionGroups;
 
         public HotkeyContainer Hotkeys;
@@ -50,6 +52,8 @@
         public static readonly Dictionary<HeroClass, List<ISnoPower>> HeroClassToSnoPowers = new Dictionary<HeroClass, List<ISnoPower>>();
 
         private BindingList<ISnoPower> skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>();
+        
+        private BindingList<string> configProfileNames = new BindingList<string>();
 
         private BindingList<DefinitionGroup> selectedSkillDefinitionGroupsDisplayValues = new BindingList<DefinitionGroup>();
 
@@ -61,6 +65,8 @@
 
         private const string SNO_POWER_LIST_ONLY_LEGENDARY_POWERS_PATTERN =
             "(Wizard_|Barbarian_|Necromancer_|Monk_|WitchDoctor_|DemonHunter_|Crusader_|Generic_)";
+        
+        private const string ADD_NEW_ITEM = "Add new...";
 
         public static Dictionary<string, ISnoPower> NameToSnoPower;
 
@@ -98,7 +104,9 @@
 
             AutoActions = Config.LoadAutoActions();
 
-            SnoToDefinitionGroups = Config.LoadDefinitions();
+            profileToSkillDefinitionGroups = Config.LoadDefinitions2();
+
+            SnoToDefinitionGroups = profileToSkillDefinitionGroups.FirstOrDefault().Value;
             SnoToDefinitionGroups.ForEach(def => skillsWithDefinitionGroupsDisplayValues.Add(Hud.Sno.GetSnoPower(def.Key)));
         }
 
@@ -173,6 +181,7 @@
         {
             InitializeComboBoxes();
             InitializeListBoxes();
+            InitializeConfigProfiles();
             cb_ShowOnlyForCurrentClass_CheckedChanged(null, null);
         }
 
@@ -225,6 +234,12 @@
 
             lb_DefinitionGroupsForSkill.DataSource = selectedSkillDefinitionGroupsDisplayValues;
             lb_DefinitionGroupsForSkill.DisplayMember = "name";
+        }
+
+        private void InitializeConfigProfiles()
+        {
+            configProfileNames = new BindingList<string>(profileToSkillDefinitionGroups.Keys.Concat(new[] {ADD_NEW_ITEM}).ToList());
+            cb_ConfigProfile.DataSource = configProfileNames;
         }
 
         private void InitializeHotkeys()
@@ -374,6 +389,34 @@
 
             DgvFormUtil.AdjustDataGridViewColumns(dgv_AutoActions);
         }
+        
+        private void cb_ConfigProfile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cb_ConfigProfile.SelectedItem.ToString() == ADD_NEW_ITEM)
+            {     
+                if (!(AddConfigProfile.GetNewConfigProfileName() is string name))
+                {
+                    cb_ConfigProfile.SelectedItem = SnoToDefinitionGroups.FirstOrDefault().Value.configProfileName ?? "Default";
+                    return;
+                }
+
+                profileToSkillDefinitionGroups.Add(name, new Dictionary<uint, DefinitionGroupsForSkill>());
+                configProfileNames = new BindingList<string>(profileToSkillDefinitionGroups.Keys.OrderBy(s => s).Concat(new[] {ADD_NEW_ITEM}).ToList());
+                cb_ConfigProfile.DataSource = configProfileNames;
+                cb_ConfigProfile.SelectedItem = name;
+            }
+            SnoToDefinitionGroups = profileToSkillDefinitionGroups[cb_ConfigProfile.SelectedItem.ToString()];
+            skillsWithDefinitionGroupsDisplayValues.Clear();
+            SnoToDefinitionGroups.ForEach(def => skillsWithDefinitionGroupsDisplayValues.Add(Hud.Sno.GetSnoPower(def.Key)));
+            
+            lb_skillsWithDefinitionGroups.ResetBindings();
+            lb_skillsWithDefinitionGroups.Refresh();    
+            lb_DefinitionGroupsForSkill.ResetBindings();
+            lb_DefinitionGroupsForSkill.Refresh();
+
+            lb_skillsWithDefinitionGroups_SelectedIndexChanged(sender, e);
+            cb_ShowOnlyForCurrentClass_CheckedChanged(sender, e);
+        }
 
         private void cb_ClassFilterChanged(object sender, EventArgs e)
         {
@@ -401,7 +444,7 @@
 
             SnoToDefinitionGroups.Add(
                 skillToAdd.Sno,
-                new DefinitionGroupsForSkill(snoPowerToHeroClass[skillToAdd.Sno].ToString(), skillToAdd.NameEnglish)
+                new DefinitionGroupsForSkill(snoPowerToHeroClass[skillToAdd.Sno].ToString(), skillToAdd.NameEnglish, cb_ConfigProfile.SelectedItem.ToString())
             );
             skillsWithDefinitionGroupsDisplayValues.Add(skillToAdd);
 

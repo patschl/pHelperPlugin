@@ -93,14 +93,29 @@
                 .ForEach(SaveDefinitionGroupsForSkill);
         }
 
-        public static Dictionary<uint, DefinitionGroupsForSkill> LoadDefinitions()
+        public static Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> LoadDefinitions2()
+        {
+            var configProfiles = new Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>>();
+            var profilePaths = Directory.GetDirectories(DEFINITION_BASE_PATH);
+            profilePaths.ForEach(path =>
+            {
+                configProfiles.Add(path.Substring(path.LastIndexOf('\\') + 1), LoadDefinitions(path));
+            });
+            
+            if (configProfiles.Count == 0)
+                configProfiles.Add("Default", new Dictionary<uint, DefinitionGroupsForSkill>());
+
+            return configProfiles;
+        }
+
+        public static Dictionary<uint, DefinitionGroupsForSkill> LoadDefinitions(string path)
         {
             var definitions = new Dictionary<uint, DefinitionGroupsForSkill>();
 
-            if (!Directory.Exists(DEFINITION_BASE_PATH))
+            if (!Directory.Exists(path))
                 return definitions;
 
-            var configFilePaths = Directory.GetFiles(DEFINITION_BASE_PATH, "*.json", SearchOption.AllDirectories);
+            var configFilePaths = Directory.GetFiles(path, "*.json", SearchOption.AllDirectories);
 
             foreach (var configFilePath in configFilePaths)
             {
@@ -135,10 +150,11 @@
         private static DefinitionGroupsForSkill CreateDefinitionGroupsForSkill(string configFilePath)
         {
             var splitFilePath = configFilePath.Split('\\');
+            var profileName = splitFilePath[splitFilePath.Length - 4];
             var heroName = splitFilePath[splitFilePath.Length - 3];
             var skillName = splitFilePath[splitFilePath.Length - 2];
 
-            return new DefinitionGroupsForSkill(heroName, skillName);
+            return new DefinitionGroupsForSkill(heroName, skillName, profileName);
         }
 
         private static DefinitionGroup LoadDefinitionGroupFromFile(string configFilePath)
@@ -148,7 +164,7 @@
 
         public static void SaveDefinitionGroupsForSkill(DefinitionGroupsForSkill definitionGroupsForSkill)
         {
-            var dirPath = $@"config\phelper\definitions\{definitionGroupsForSkill.heroClassName}\{definitionGroupsForSkill.skillName}\";
+            var dirPath = $@"config\phelper\definitions\{definitionGroupsForSkill.configProfileName}\{definitionGroupsForSkill.heroClassName}\{definitionGroupsForSkill.skillName}\";
             Directory.CreateDirectory(dirPath);
 
             definitionGroupsForSkill.definitionGroups.ForEach(definitionGroup =>
