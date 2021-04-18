@@ -4,6 +4,7 @@
     {
         public static class Buttons
         {
+			public const string START_GAME = "Root.NormalLayer.BattleNetCampaign_main.LayoutRoot.Menu.PlayGameButton";
             public const string LEAVE_GAME = "Root.NormalLayer.gamemenu_dialog.gamemenu_bkgrnd.ButtonStackContainer.button_leaveGame";
             public const string GAME_MENU = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_menu";
             public const string INVENTORY = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_inventory";
