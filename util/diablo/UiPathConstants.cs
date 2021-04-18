@@ -41,6 +41,14 @@
             }
         }
 
+        public static class Dialogs
+        {
+            public const string QUEST_COMPLETED = "Root.NormalLayer.questreward_dialog";
+            public const string HORADRIC_CACHE = "Root.NormalLayer.BountyReward_main.LayoutRoot";
+            public const string GREATER_RIFT_COMPLETED = "Root.NormalLayer.GreaterRifts_VictoryScreen.LayoutRoot";
+            public const string GREATER_RIFT_INVITE = "Root.NormalLayer.rift_join_party_main.LayoutRoot";
+        }
+
         public static class Blacksmith
         {
             public const string UNIQUE_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_4";
