@@ -1,6 +1,7 @@
 ﻿namespace Turbo.plugins.patrick.autoactions.actions.town
 {
     using System.Collections.Generic;
+	using System.Text;
     using parameters;
     using Plugins;
     using util.diablo;
@@ -12,7 +13,7 @@
 
         public override string GetAttributes() => "";
 
-        public override long minimumExecutionDelta => 72;
+        public override long minimumExecutionDelta => 500;
 
         public override List<AbstractParameter> GetParameters()
         {
@@ -21,15 +22,16 @@
 
         public override bool Applicable(IController hud)
         {
-            return !hud.Game.IsInGame && !hud.Game.IsLoading;
-            hud.Render.IsUiElementVisible(UiPathConstants.Buttons.START_GAME);
+            return !hud.Game.IsInGame 
+            && !hud.Game.IsLoading
+            && hud.Render.IsUiElementVisible(UiPathConstants.Buttons.START_GAME)
+            && hud.Render.GetUiElement(UiPathConstants.Buttons.START_GAME)
+                  .ReadText(Encoding.ASCII, true).Contains("Start");
         }
 
         public override void Invoke(IController hud)
         {
-            var startGameButton = hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.Buttons.START_GAME);
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Buttons.START_GAME);
-            startGameButton.Click();
         }
     }
 }
