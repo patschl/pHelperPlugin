@@ -21,14 +21,15 @@
 
         public override bool Applicable(IController hud)
         {
-			return !hud.Game.IsInGame && !hud.Game.IsLoading;
+            return !hud.Game.IsInGame && !hud.Game.IsLoading;
+            hud.Render.IsUiElementVisible(UiPathConstants.Buttons.START_GAME);
         }
 
         public override void Invoke(IController hud)
         {
-			var startGameButton = hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.Buttons.START_GAME);
+            var startGameButton = hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.Buttons.START_GAME);
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Buttons.START_GAME);
-			startGameButton.Click();
+            startGameButton.Click();
         }
     }
 }
