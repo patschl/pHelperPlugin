@@ -13,18 +13,18 @@
         private readonly Settings settings;
 
         private const long MINIMUM_CAST_DELTA = 500;
-
+        
         public SkillExecutor(Settings settings)
         {
             this.settings = settings;
         }
 
         public void Cast(IPlayerSkill skill)
-        { 
+        {
             if (!settings.SnoToDefinitionGroups.TryGetValue(skill.SnoPower.Sno, out var definitionGroupsForSkill))
                 return;
-
-            if (!AllowedToCast(skill))
+            
+            if (!definitionGroupsForSkill.active || !AllowedToCast(skill) || !Settings.KeyToActive[skill.Key])
                 return;
 
             var applicableGroup =

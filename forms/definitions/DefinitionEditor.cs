@@ -10,6 +10,8 @@
     using Plugins.Patrick.util.winformutil;
     using skills;
     using skills.definitions;
+    using util.diablo;
+    using util.thud;
 
     public partial class DefinitionEditor : Form
     {
@@ -109,6 +111,7 @@
             Size = new Size(Size.Width, Size.Height + (parameters.Count * 40));
             b_Save.Location = new Point(b_Save.Location.X, b_Save.Location.Y + (parameters.Count * 40));
             b_Cancel.Location = new Point(b_Cancel.Location.X, b_Cancel.Location.Y + (parameters.Count * 40));
+            b_ShowActivePowerOverlay.Location = new Point(b_ShowActivePowerOverlay.Location.X, b_ShowActivePowerOverlay.Location.Y + (parameters.Count * 40));
 
             parameters.ForEach(AddParameterToForm);
         }
@@ -166,12 +169,21 @@
         private void ResetForm()
         {
             Size = new Size(500, 215);
-            b_Save.Location = new Point(265, 120);
+            b_Save.Location = new Point(263, 120);
             b_Cancel.Location = new Point(372, 120);
+            b_ShowActivePowerOverlay.Location = new Point(12, 133);
 
             addedControls.ForEach(control => Controls.Remove(control));
             addedControls.Clear();
             yOffset = 0;
+        }
+
+        private void b_ShowActivePowerOverlay_Click(object sender, EventArgs e)
+        {
+            var activePowerOverlay = hud.GetPlugin<ActivePowerOverlay>();
+            activePowerOverlay.Reset();
+            activePowerOverlay.Enabled = true;
+            D3Client.BringToFront();
         }
     }
 }

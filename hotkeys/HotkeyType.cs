@@ -4,6 +4,7 @@
     public enum HotkeyType
     {
         All,
+        Settings,
         Teleport,
         General
     }

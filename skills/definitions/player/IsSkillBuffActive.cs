@@ -38,10 +38,10 @@
                     nameof(BuffName),
                     input =>
                     {
-                        if (!(input is KeyValuePair<string, ISnoPower> pair))
+                        if (!(input is ISnoPower power))
                             return;
-                        BuffName = pair.Key;
-                        SelectedSno = pair.Value.Sno;
+                        BuffName = power.NameEnglish;
+                        SelectedSno = power.Sno;
                     },
                     Settings.HeroClassToSnoPowers[HeroClass.None],
                     "NameEnglish"

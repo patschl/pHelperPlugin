@@ -13,7 +13,11 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
     public class AutoItemPickup : AbstractAutoAction
     {
         public bool CraftingMats { get; set; }
+        
         public bool Legendaries { get; set; }
+        
+        public bool Jewels { get; set; }
+            
         public int PickupRange { get; set; } = 10;
 
         [JsonIgnore]
@@ -47,6 +51,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
             {
                 SimpleParameter<bool>.of(nameof(CraftingMats), x => CraftingMats = x),
                 SimpleParameter<bool>.of(nameof(Legendaries), x => Legendaries = x),
+                SimpleParameter<bool>.of(nameof(Jewels), x => Jewels = x),
                 SimpleParameter<int>.of(nameof(PickupRange), x => PickupRange = x),
             };
         }
@@ -75,7 +80,10 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
 
             if (Legendaries)
                 matches |= item.IsLegendary;
-            
+
+            if (Jewels)
+                matches |= item.JewelRank > -1;
+
             return matches;
         }
 

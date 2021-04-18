@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
+    using System.Windows.Forms.VisualStyles;
     using autoactions;
     using Default;
     using hotkeys;
@@ -27,6 +28,18 @@
         public readonly IController Hud;
 
         public static Dictionary<int, Keys> Keybinds;
+        
+        public static volatile Dictionary<ActionKey, bool> KeyToActive = new Dictionary<ActionKey, bool>
+        {
+            {ActionKey.LeftSkill, true},
+            {ActionKey.RightSkill, true},
+            {ActionKey.Skill1, true},
+            {ActionKey.Skill2, true},
+            {ActionKey.Skill3, true},
+            {ActionKey.Skill4, true}
+        };
+        
+        public static volatile bool Active = true;
 
         public Dictionary<uint, DefinitionGroupsForSkill> SnoToDefinitionGroups;
 
@@ -160,6 +173,7 @@
         {
             InitializeComboBoxes();
             InitializeListBoxes();
+            cb_ShowOnlyForCurrentClass_CheckedChanged(null, null);
         }
 
         private void InitializeComboBoxes()
@@ -440,27 +454,26 @@
             cb_SkillActive.Checked = currentlySelectedDefinitionGroups.active;
         }
 
-        private void cb_ShowOnlyForCurrentClass_CheckedChanged(object sender, EventArgs e)
+        public void cb_ShowOnlyForCurrentClass_CheckedChanged(object sender, EventArgs e)
         {
+            var allSnoPowers = SnoToDefinitionGroups
+                .Select(pair => Hud.Sno.GetSnoPower(pair.Key))
+                .OrderBy(skill => skill.NameEnglish)
+                .ToList();
+            
             if (cb_ShowOnlyForCurrentClass.Checked)
             {
                 var skillsForCurrentClass = HeroClassToSnoPowers[Hud.Game.Me.HeroClassDefinition?.HeroClass ?? HeroClass.None];
 
                 skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>(
-                    skillsWithDefinitionGroupsDisplayValues
+                    allSnoPowers
                         .Where(skill => skillsForCurrentClass.Contains(skill))
                         .OrderBy(skill => skill.NameEnglish)
                         .ToList());
             }
             else
             {
-                skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>(
-                    SnoToDefinitionGroups
-                        .Select(pair => pair.Key)
-                        .Select(sno => Hud.Sno.GetSnoPower(sno))
-                        .OrderBy(skill => skill.NameEnglish)
-                        .ToList()
-                );
+                skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>(allSnoPowers);
             }
 
             lb_skillsWithDefinitionGroups.DataSource = skillsWithDefinitionGroupsDisplayValues;

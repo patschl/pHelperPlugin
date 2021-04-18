@@ -37,8 +37,16 @@
         {
             return GetForegroundWindow() == GetHandle().MainWindowHandle;
         }
+
+        public static void BringToFront()
+        {
+            SetForegroundWindow(Handle.MainWindowHandle);
+        }
         
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+        
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }

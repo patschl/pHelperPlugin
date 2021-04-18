@@ -18,6 +18,8 @@
 
     public static class Config
     {
+        public const string VERSION = "0.9.2-BETA";
+        
         private const string DEFINITION_BASE_PATH = @"config\phelper\definitions";
         private const string KEYBINDS_CONFIG_PATH = @"config\phelper\keybinds.json";
         private const string HOTKEYS_CONFIG_PATH = @"config\phelper\hotkeys.json";
