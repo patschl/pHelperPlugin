@@ -7,7 +7,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
-    using System.Windows.Forms.VisualStyles;
     using autoactions;
     using Default;
     using hotkeys;
@@ -41,6 +40,8 @@
         
         public static volatile bool Active = true;
 
+        private Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> profileToSkillDefinitionGroups;
+        
         public Dictionary<uint, DefinitionGroupsForSkill> SnoToDefinitionGroups;
 
         public HotkeyContainer Hotkeys;
@@ -50,6 +51,8 @@
         public static readonly Dictionary<HeroClass, List<ISnoPower>> HeroClassToSnoPowers = new Dictionary<HeroClass, List<ISnoPower>>();
 
         private BindingList<ISnoPower> skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>();
+        
+        private BindingList<string> masterProfileNames = new BindingList<string>();
 
         private BindingList<DefinitionGroup> selectedSkillDefinitionGroupsDisplayValues = new BindingList<DefinitionGroup>();
 
@@ -61,6 +64,8 @@
 
         private const string SNO_POWER_LIST_ONLY_LEGENDARY_POWERS_PATTERN =
             "(Wizard_|Barbarian_|Necromancer_|Monk_|WitchDoctor_|DemonHunter_|Crusader_|Generic_)";
+        
+        public const string ADD_NEW_ITEM = "Add new...";
 
         public static Dictionary<string, ISnoPower> NameToSnoPower;
 
@@ -91,14 +96,16 @@
 
         private void LoadConfig()
         {
-            Keybinds = Config.LoadKeybinds();
+            Keybinds = ConfigPersistence.LoadKeybinds();
 
-            Hotkeys = Config.LoadHotkeyContainer();
+            Hotkeys = ConfigPersistence.LoadHotkeyContainer();
             Hotkeys.InitializeIKeyEventsAndSort(Hud.Input);
 
-            AutoActions = Config.LoadAutoActions();
+            AutoActions = ConfigPersistence.LoadAutoActions();
 
-            SnoToDefinitionGroups = Config.LoadDefinitions();
+            profileToSkillDefinitionGroups = ConfigPersistence.LoadMasterProfiles();
+
+            SnoToDefinitionGroups = profileToSkillDefinitionGroups.FirstOrDefault().Value;
             SnoToDefinitionGroups.ForEach(def => skillsWithDefinitionGroupsDisplayValues.Add(Hud.Sno.GetSnoPower(def.Key)));
         }
 
@@ -112,53 +119,53 @@
             cb_Skill1.DataSource = InputUtil.KeyboardKeys();
             cb_Skill1.SelectedItem = Keybinds[(int)ActionKey.Skill1];
             cb_Skill1.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill1, cb_Skill1);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Skill1, cb_Skill1);
 
 
             cb_Skill2.DataSource = InputUtil.KeyboardKeys();
             cb_Skill2.SelectedItem = Keybinds[(int)ActionKey.Skill2];
             cb_Skill2.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill2, cb_Skill2);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Skill2, cb_Skill2);
 
             cb_Skill3.DataSource = InputUtil.KeyboardKeys();
             cb_Skill3.SelectedItem = Keybinds[(int)ActionKey.Skill3];
             cb_Skill3.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill3, cb_Skill3);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Skill3, cb_Skill3);
 
             cb_Skill4.DataSource = InputUtil.KeyboardKeys();
             cb_Skill4.SelectedItem = Keybinds[(int)ActionKey.Skill4];
             cb_Skill4.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Skill4, cb_Skill4);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Skill4, cb_Skill4);
 
             cb_ForceStand.DataSource = InputUtil.KeyboardKeys();
             cb_ForceStand.SelectedItem = Keybinds[(int)ActionKey.Unknown];
             cb_ForceStand.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Unknown, cb_ForceStand);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Unknown, cb_ForceStand);
 
             cb_ForceMove.DataSource = InputUtil.KeyboardKeys().Concat(InputUtil.MouseKeys()).ToList();
             cb_ForceMove.SelectedItem = Keybinds[(int)ActionKey.Move];
             cb_ForceMove.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Move, cb_ForceMove);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Move, cb_ForceMove);
 
             cb_CloseWindows.DataSource = InputUtil.KeyboardKeys();
             cb_CloseWindows.SelectedItem = Keybinds[(int)ActionKey.Close];
             cb_CloseWindows.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Close, cb_CloseWindows);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Close, cb_CloseWindows);
 
             cb_Map.DataSource = InputUtil.KeyboardKeys();
             cb_Map.SelectedItem = Keybinds[(int)ActionKey.Map];
             cb_Map.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Map, cb_Map);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Map, cb_Map);
 
             cb_Potion.DataSource = InputUtil.KeyboardKeys();
             cb_Potion.SelectedItem = Keybinds[(int)ActionKey.Heal];
             cb_Potion.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig((int)ActionKey.Heal, cb_Potion);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig((int)ActionKey.Heal, cb_Potion);
 
             cb_Qol.DataSource = InputUtil.KeyboardKeys().Concat(InputUtil.MouseKeys()).ToList();
-            cb_Qol.SelectedItem = Keybinds[Config.QOL_KEY_INDEX];
+            cb_Qol.SelectedItem = Keybinds[ConfigPersistence.QOL_KEY_INDEX];
             cb_Qol.SelectedIndexChanged +=
-                (sender, args) => Config.SetKeybindAndSaveConfig(Config.QOL_KEY_INDEX, cb_Qol);
+                (sender, args) => ConfigPersistence.SetKeybindAndSaveConfig(ConfigPersistence.QOL_KEY_INDEX, cb_Qol);
         }
 
         private void InitializeLogger()
@@ -172,6 +179,13 @@
         private void InitializeSkillEditor()
         {
             InitializeComboBoxes();
+            InitializeListBoxes();
+            InitializeMasterProfiles();
+            cb_ShowOnlyForCurrentClass_CheckedChanged(null, null);
+        }
+
+        private void ResetSkillEditor()
+        {
             InitializeListBoxes();
             cb_ShowOnlyForCurrentClass_CheckedChanged(null, null);
         }
@@ -227,6 +241,12 @@
             lb_DefinitionGroupsForSkill.DisplayMember = "name";
         }
 
+        private void InitializeMasterProfiles()
+        {
+            masterProfileNames = new BindingList<string>(profileToSkillDefinitionGroups.Keys.Concat(new[] {ADD_NEW_ITEM}).ToList());
+            cb_MasterProfile.DataSource = masterProfileNames;
+        }
+
         private void InitializeHotkeys()
         {
             dgv_Hotkeys.RowHeadersVisible = false;
@@ -260,7 +280,7 @@
                 var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                 hotkey.active = isChecked;
 
-                Config.SaveHotkeys(Hotkeys);
+                ConfigPersistence.SaveHotkeys(Hotkeys);
             };
 
             dgv_Hotkeys.CellClick += (sender, args) =>
@@ -278,7 +298,7 @@
                 {
                     var hotkey = (AbstractHotkeyAction)dgv_Hotkeys.Rows[args.RowIndex].DataBoundItem;
                     hotkey.RemoveKeybind();
-                    Config.SaveHotkeys(Hotkeys);
+                    ConfigPersistence.SaveHotkeys(Hotkeys);
                 }
                 else if (args.ColumnIndex == dgv_Hotkeys.Columns["edit"]?.Index)
                 {
@@ -287,7 +307,7 @@
                         return;
 
                     if (HotkeyEditor.EditHotkeyAction(hotkey))
-                        Config.SaveHotkeys(Hotkeys);
+                        ConfigPersistence.SaveHotkeys(Hotkeys);
                 }
                 else
                     return;
@@ -343,7 +363,7 @@
                 var autoAction = (AbstractAutoAction)dgv_AutoActions.Rows[args.RowIndex].DataBoundItem;
                 autoAction.active = isChecked;
 
-                Config.SaveAutoActions(AutoActions);
+                ConfigPersistence.SaveAutoActions(AutoActions);
             };
 
             dgv_AutoActions.CellClick += (sender, args) =>
@@ -355,7 +375,7 @@
                 if (string.IsNullOrWhiteSpace(autoAction?.attributes))
                     return;
                 if (AutoActionEditor.EditAutoAction(autoAction))
-                    Config.SaveAutoActions(AutoActions);
+                    ConfigPersistence.SaveAutoActions(AutoActions);
 
                 dgv_AutoActions.Refresh();
             };
@@ -374,6 +394,45 @@
 
             DgvFormUtil.AdjustDataGridViewColumns(dgv_AutoActions);
         }
+        
+        private void cb_MasterProfile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cb_MasterProfile.SelectedItem.ToString() == ADD_NEW_ITEM)
+            {     
+                AddNewMasterProfile();
+                return;
+            }
+            
+            SnoToDefinitionGroups = profileToSkillDefinitionGroups[cb_MasterProfile.SelectedItem.ToString()];
+            
+            skillsWithDefinitionGroupsDisplayValues = new BindingList<ISnoPower>();
+            selectedSkillDefinitionGroupsDisplayValues = new BindingList<DefinitionGroup>();
+            
+            lb_DefinitionGroupsForSkill.DataSource = selectedSkillDefinitionGroupsDisplayValues;
+            
+            cb_ShowOnlyForCurrentClass_CheckedChanged(null, null);
+        }
+
+        private void AddNewMasterProfile()
+        {
+            if (!(AddMasterProfile.GetNewMasterProfileName() is string name))
+            {
+                cb_MasterProfile.SelectedItem = SnoToDefinitionGroups.FirstOrDefault().Value?.configProfileName ?? "Default";
+                return;
+            }
+
+            if (profileToSkillDefinitionGroups.ContainsKey(name))
+            {
+                MessageBox.Show($"Profile with the name {name} already exists!");
+                cb_MasterProfile_SelectedIndexChanged(null, null);
+                return;
+            }
+            
+            profileToSkillDefinitionGroups.Add(name, new Dictionary<uint, DefinitionGroupsForSkill>());
+            masterProfileNames = new BindingList<string>(profileToSkillDefinitionGroups.Keys.OrderBy(s => s).Concat(new[] {ADD_NEW_ITEM}).ToList());
+            cb_MasterProfile.DataSource = masterProfileNames;
+            cb_MasterProfile.SelectedItem = name;
+        }
 
         private void cb_ClassFilterChanged(object sender, EventArgs e)
         {
@@ -385,10 +444,9 @@
             if (keyEvent is null)
                 return;
 
-
             var iKeyEvent = keyEvent.toIKeyEvent(Hud.Input);
             hotkey.SetKeyEvent(keyEvent, iKeyEvent);
-            Config.SaveHotkeys(Hotkeys);
+            ConfigPersistence.SaveHotkeys(Hotkeys);
         }
 
         private void b_addSkillToDefinitionGroups(object sender, EventArgs e)
@@ -401,7 +459,7 @@
 
             SnoToDefinitionGroups.Add(
                 skillToAdd.Sno,
-                new DefinitionGroupsForSkill(snoPowerToHeroClass[skillToAdd.Sno].ToString(), skillToAdd.NameEnglish)
+                new DefinitionGroupsForSkill(snoPowerToHeroClass[skillToAdd.Sno].ToString(), skillToAdd.NameEnglish, cb_MasterProfile.SelectedItem.ToString())
             );
             skillsWithDefinitionGroupsDisplayValues.Add(skillToAdd);
 
@@ -437,12 +495,16 @@
             selectedSkillDefinitionGroupsDisplayValues.ResetBindings();
             tb_DefintionGroupName.Text = "";
 
-            Config.SaveDefinitionGroupsForSkill(currentSkillDefinitionGroups);
+            ConfigPersistence.SaveDefinitionGroupsForSkill(currentSkillDefinitionGroups);
         }
 
         private void lb_skillsWithDefinitionGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var currentSnoPower = (ISnoPower)lb_skillsWithDefinitionGroups.SelectedItem;
+            if (!((ISnoPower)lb_skillsWithDefinitionGroups.SelectedItem is ISnoPower currentSnoPower))
+            {
+                selectedSkillDefinitionGroupsDisplayValues.Clear();
+                return;
+            }
 
             var currentlySelectedDefinitionGroups = SnoToDefinitionGroups[currentSnoPower.Sno];
 
@@ -488,8 +550,13 @@
                                                         currentlySelectedDefinitionGroup.name +
                                                         " and all of it's definitions?");
 
-            if (result)
-                selectedSkillDefinitionGroupsDisplayValues.Remove(currentlySelectedDefinitionGroup);
+            if (!result)
+                return;
+            
+            selectedSkillDefinitionGroupsDisplayValues.Remove(currentlySelectedDefinitionGroup);
+            var parentDefinitionGroups = SnoToDefinitionGroups[currentlySelectedDefinitionGroup.sno];
+            parentDefinitionGroups.definitionGroups.Remove(currentlySelectedDefinitionGroup);
+            ConfigPersistence.DeleteDefinitionGroup(parentDefinitionGroups, currentlySelectedDefinitionGroup.name);
         }
 
         private void b_DeleteSkillFromDefinitionGroups_Click(object sender, EventArgs e)
@@ -501,10 +568,12 @@
                 "Are you sure you want to delete all DefinitionGroups for skill " +
                 currentlySelectedSkill.NameEnglish + "?");
 
-            if (!result) return;
+            if (!result) 
+                return;
 
-            skillsWithDefinitionGroupsDisplayValues.Remove(currentlySelectedSkill);
+            ConfigPersistence.DeleteSkillDefinitionGroups(SnoToDefinitionGroups[currentlySelectedSkill.Sno]);
             SnoToDefinitionGroups.Remove(currentlySelectedSkill.Sno);
+            skillsWithDefinitionGroupsDisplayValues.Remove(currentlySelectedSkill);
         }
 
         private void cb_DefinitionGroupActive_CheckedChanged(object sender, EventArgs e)
@@ -538,7 +607,7 @@
 
             var modified = DefinitionGroupEditor.ShowDefinitionGroupEditor(currentlySelectedDefinitionGroup, Hud);
             if (modified)
-                Config.SaveDefinitionGroupsForSkill(SnoToDefinitionGroups[currentlySelectedDefinitionGroup.sno]);
+                ConfigPersistence.SaveDefinitionGroupsForSkill(SnoToDefinitionGroups[currentlySelectedDefinitionGroup.sno]);
         }
 
         private void lb_DefinitionGroupsForSkill_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -548,10 +617,10 @@
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Config.SaveDefinitions(SnoToDefinitionGroups);
-            Config.SaveKeybinds(Keybinds);
-            Config.SaveHotkeys(Hotkeys);
-            Config.SaveAutoActions(AutoActions);
+            ConfigPersistence.SaveDefinitions(SnoToDefinitionGroups);
+            ConfigPersistence.SaveKeybinds(Keybinds);
+            ConfigPersistence.SaveHotkeys(Hotkeys);
+            ConfigPersistence.SaveAutoActions(AutoActions);
             e.Cancel = true;
         }
 

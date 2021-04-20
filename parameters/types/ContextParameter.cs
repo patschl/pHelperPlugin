@@ -25,12 +25,6 @@
             return new ContextParameter(propertyName, setter, options.Cast<object>().ToList(), displayMember);
         }
 
-        public override ParameterType parameterType
-        {
-            get
-            {
-                return ParameterType.ContextParameter;
-            }
-        }
+        public override ParameterType parameterType => ParameterType.ContextParameter;
     }
 }

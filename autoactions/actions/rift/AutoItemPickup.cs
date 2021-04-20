@@ -82,7 +82,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
                 matches |= item.IsLegendary;
 
             if (Jewels)
-                matches |= item.JewelRank > -1;
+                matches |= item.SnoItem.Kind == ItemKind.gem;
 
             return matches;
         }
