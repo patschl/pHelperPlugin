@@ -4,19 +4,19 @@ namespace Turbo.plugins.patrick.forms.definitions
 {
     using System;
 
-    public partial class AddConfigProfile : Form
+    public partial class AddMasterProfile : Form
     {
 
         private string name;
         
-        public AddConfigProfile()
+        private AddMasterProfile()
         {
             InitializeComponent();
         }
 
-        public static string GetNewConfigProfileName()
+        public static string GetNewMasterProfileName()
         {
-            var form = new AddConfigProfile();
+            var form = new AddMasterProfile();
             form.ShowDialog();
 
             return form.name;
@@ -32,6 +32,15 @@ namespace Turbo.plugins.patrick.forms.definitions
         {
             name = null;
             Close();
+        }
+
+        private void AddMasterProfile_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+                b_Save.PerformClick();
+            
+            if (e.KeyData == Keys.Escape)
+                b_Cancel.PerformClick();
         }
     }
 }

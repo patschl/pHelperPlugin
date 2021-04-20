@@ -54,7 +54,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
         public override bool Applicable(IController hud)
         {
             return hud.Game.Me.IsInTown
-                   && IsShopOpen(hud)
+                   && hud.Render.IsShopOpen()
                    && hud.Render.GetUiElement(UiPathConstants.Vendor.CURRENCY_TYPE)
                        .ReadText(Encoding.ASCII, true).Contains("icon:x1_shard");
         }
@@ -73,17 +73,15 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             hud.Render.WaitForVisiblityAndRightClickOrAbortHotkeyEvent(itemLocation[0]);
             for (var i = 0; i < --maxItems; i++)
             {
-                if (!IsShopOpen(hud))
+                if (!hud.Render.IsShopOpen())
                     return;
                 hud.Render.GetOrRegisterAndGetUiElement(itemLocation[0]).RightClick();
             }
 
-            if (IsShopOpen(hud))
+            if (hud.Render.IsShopOpen())
                 hud.Render.GetOrRegisterAndGetUiElement(UiPathConstants.Vendor.CLOSE_BUTTON).Click();
             
             hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Buttons.INVENTORY);
         }
-
-        private static bool IsShopOpen(IController hud) => hud.Render.IsUiElementVisible(UiPathConstants.Vendor.CURRENCY_TYPE);
     }
 }

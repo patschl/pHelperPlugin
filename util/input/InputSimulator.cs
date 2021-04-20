@@ -233,7 +233,7 @@
         }
 
 
-        private static bool PostMessageMouseClickLeft(int x, int y)
+        public static bool PostMessageMouseClickLeft(int x, int y)
         {
             var lParam = ConvertPositionToLparam(x, y);
             var success = User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_LBUTTONDOWN,
@@ -242,7 +242,7 @@
             return success;
         }
 
-        private static bool PostMessageMouseClickRight(int x, int y)
+        public static bool PostMessageMouseClickRight(int x, int y)
         {
             var lParam = ConvertPositionToLparam(x, y);
             var success = User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_RBUTTONDOWN,

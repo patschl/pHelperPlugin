@@ -33,7 +33,7 @@
         {
             this.main = new System.Windows.Forms.TabControl();
             this.tab_SkillEditor = new System.Windows.Forms.TabPage();
-            this.cb_ConfigProfile = new System.Windows.Forms.ComboBox();
+            this.cb_MasterProfile = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.cb_SkillActive = new System.Windows.Forms.CheckBox();
             this.b_DeleteSkillFromDefinitionGroups = new System.Windows.Forms.Button();
@@ -106,7 +106,7 @@
             // 
             // tab_SkillEditor
             // 
-            this.tab_SkillEditor.Controls.Add(this.cb_ConfigProfile);
+            this.tab_SkillEditor.Controls.Add(this.cb_MasterProfile);
             this.tab_SkillEditor.Controls.Add(this.label16);
             this.tab_SkillEditor.Controls.Add(this.cb_SkillActive);
             this.tab_SkillEditor.Controls.Add(this.b_DeleteSkillFromDefinitionGroups);
@@ -132,23 +132,23 @@
             this.tab_SkillEditor.Text = "Skill Editor";
             this.tab_SkillEditor.UseVisualStyleBackColor = true;
             // 
-            // cb_ConfigProfile
+            // cb_MasterProfile
             // 
-            this.cb_ConfigProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_ConfigProfile.FormattingEnabled = true;
-            this.cb_ConfigProfile.Location = new System.Drawing.Point(289, 110);
-            this.cb_ConfigProfile.Name = "cb_ConfigProfile";
-            this.cb_ConfigProfile.Size = new System.Drawing.Size(156, 21);
-            this.cb_ConfigProfile.TabIndex = 21;
-            this.cb_ConfigProfile.SelectedIndexChanged += new System.EventHandler(this.cb_ConfigProfile_SelectedIndexChanged);
+            this.cb_MasterProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_MasterProfile.FormattingEnabled = true;
+            this.cb_MasterProfile.Location = new System.Drawing.Point(289, 12);
+            this.cb_MasterProfile.Name = "cb_MasterProfile";
+            this.cb_MasterProfile.Size = new System.Drawing.Size(156, 21);
+            this.cb_MasterProfile.TabIndex = 21;
+            this.cb_MasterProfile.SelectedIndexChanged += new System.EventHandler(this.cb_MasterProfile_SelectedIndexChanged);
             // 
             // label16
             // 
-            this.label16.Location = new System.Drawing.Point(217, 113);
+            this.label16.Location = new System.Drawing.Point(209, 12);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(127, 24);
             this.label16.TabIndex = 20;
-            this.label16.Text = "Config Profile:";
+            this.label16.Text = "Master Profile:";
             // 
             // cb_SkillActive
             // 
@@ -162,7 +162,7 @@
             // 
             // b_DeleteSkillFromDefinitionGroups
             // 
-            this.b_DeleteSkillFromDefinitionGroups.Location = new System.Drawing.Point(209, 39);
+            this.b_DeleteSkillFromDefinitionGroups.Location = new System.Drawing.Point(3, 39);
             this.b_DeleteSkillFromDefinitionGroups.Name = "b_DeleteSkillFromDefinitionGroups";
             this.b_DeleteSkillFromDefinitionGroups.Size = new System.Drawing.Size(23, 26);
             this.b_DeleteSkillFromDefinitionGroups.TabIndex = 14;
@@ -202,9 +202,9 @@
             // 
             // b_AddNewDefinitionGroup
             // 
-            this.b_AddNewDefinitionGroup.Location = new System.Drawing.Point(269, 287);
+            this.b_AddNewDefinitionGroup.Location = new System.Drawing.Point(265, 185);
             this.b_AddNewDefinitionGroup.Name = "b_AddNewDefinitionGroup";
-            this.b_AddNewDefinitionGroup.Size = new System.Drawing.Size(139, 42);
+            this.b_AddNewDefinitionGroup.Size = new System.Drawing.Size(139, 28);
             this.b_AddNewDefinitionGroup.TabIndex = 10;
             this.b_AddNewDefinitionGroup.Text = "Add new definition group";
             this.b_AddNewDefinitionGroup.UseVisualStyleBackColor = true;
@@ -212,14 +212,14 @@
             // 
             // tb_DefintionGroupName
             // 
-            this.tb_DefintionGroupName.Location = new System.Drawing.Point(269, 244);
+            this.tb_DefintionGroupName.Location = new System.Drawing.Point(265, 142);
             this.tb_DefintionGroupName.Name = "tb_DefintionGroupName";
             this.tb_DefintionGroupName.Size = new System.Drawing.Size(156, 20);
             this.tb_DefintionGroupName.TabIndex = 9;
             // 
             // label13
             // 
-            this.label13.Location = new System.Drawing.Point(230, 247);
+            this.label13.Location = new System.Drawing.Point(226, 145);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(127, 24);
             this.label13.TabIndex = 8;
@@ -285,7 +285,7 @@
             // lb_skillsWithDefinitionGroups
             // 
             this.lb_skillsWithDefinitionGroups.FormattingEnabled = true;
-            this.lb_skillsWithDefinitionGroups.Location = new System.Drawing.Point(25, 39);
+            this.lb_skillsWithDefinitionGroups.Location = new System.Drawing.Point(32, 39);
             this.lb_skillsWithDefinitionGroups.Name = "lb_skillsWithDefinitionGroups";
             this.lb_skillsWithDefinitionGroups.Size = new System.Drawing.Size(178, 290);
             this.lb_skillsWithDefinitionGroups.TabIndex = 1;
@@ -295,7 +295,7 @@
             // 
             this.cb_ShowOnlyForCurrentClass.Checked = true;
             this.cb_ShowOnlyForCurrentClass.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_ShowOnlyForCurrentClass.Location = new System.Drawing.Point(52, 9);
+            this.cb_ShowOnlyForCurrentClass.Location = new System.Drawing.Point(38, 7);
             this.cb_ShowOnlyForCurrentClass.Name = "cb_ShowOnlyForCurrentClass";
             this.cb_ShowOnlyForCurrentClass.Size = new System.Drawing.Size(151, 24);
             this.cb_ShowOnlyForCurrentClass.TabIndex = 0;
@@ -662,12 +662,12 @@
         private System.Windows.Forms.Button b_EditDefinitionGroup;
         private System.Windows.Forms.ComboBox cb_ClassFilter;
         private System.Windows.Forms.ComboBox cb_CloseWindows;
-        private System.Windows.Forms.ComboBox cb_ConfigProfile;
         private System.Windows.Forms.CheckBox cb_DefinitionGroupActive;
         private System.Windows.Forms.ComboBox cb_ForceMove;
         private System.Windows.Forms.ComboBox cb_ForceStand;
         private System.Windows.Forms.ComboBox cb_LogLevel;
         private System.Windows.Forms.ComboBox cb_Map;
+        private System.Windows.Forms.ComboBox cb_MasterProfile;
         private System.Windows.Forms.ComboBox cb_Potion;
         private System.Windows.Forms.ComboBox cb_Qol;
         private System.Windows.Forms.CheckBox cb_ShowOnlyForCurrentClass;

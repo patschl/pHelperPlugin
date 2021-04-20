@@ -1,6 +1,5 @@
 ﻿namespace Turbo.Plugins.Patrick
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading;
     using Default;
@@ -8,6 +7,7 @@
     using plugins.patrick.skills;
     using plugins.patrick.util.config;
     using plugins.patrick.util.diablo;
+    using plugins.patrick.util.input;
     using plugins.patrick.util.thud;
 
     public class pHelper : BasePlugin, IInGameTopPainter, IKeyEventHandler, IAfterCollectHandler, INewAreaHandler
@@ -74,20 +74,9 @@
                 watermarkDisabled.DrawText("pHelper", 4, Hud.Window.Size.Height * 0.966f);
             
             if (Hud.Window.CursorInsideRect(4, Hud.Window.Size.Height * 0.966f, 70, 20))
-                version.DrawText("v" + Config.VERSION, 4, Hud.Window.Size.Height * 0.946f);
+                version.DrawText("v" + ConfigPersistence.VERSION, 4, Hud.Window.Size.Height * 0.946f);
         }
-
-        public void AfterCollect()
-        {
-            if (Hud.Game.IsLoading || Hud.Game.IsPaused || !D3Client.IsInForeground() || !Settings.Active)
-                return;
-
-            settings.AutoActions.ExecuteAutoActions(Hud);
-
-            if (CharacterCanCast())
-                ExecuteClassMacros();
-        }
-
+        
         private void DrawSkillBrushes()
         {
             Hud.Game.Me.Powers.UsedSkills.ForEach(skill =>
@@ -99,6 +88,28 @@
             });
         }
 
+        public void AfterCollect()
+        {
+            if (Hud.Game.IsLoading || Hud.Game.IsPaused || !D3Client.IsInForeground() || !Settings.Active)
+                return;
+            
+            if (Hud.Input.IsKeyDown(Settings.Keybinds[ConfigPersistence.QOL_KEY_INDEX]))
+                ExecuteQolMacro();
+
+            settings.AutoActions.ExecuteAutoActions(Hud);
+
+            if (CharacterCanCast())
+                ExecuteClassMacros();
+        }
+
+        private void ExecuteQolMacro()
+        {
+            if (!Hud.Game.IsInTown || (!Hud.Render.IsShopOpen() && !Hud.Inventory.StashMainUiElement.Visible))
+                InputSimulator.PostMessageMouseClickLeft(Hud.Window.CursorX, Hud.Window.CursorY);
+            else if (Hud.Inventory.HoveredItem != null)
+                Hud.Inventory.GetItemRect(Hud.Inventory.HoveredItem).RightClick();
+        }
+
         private void ExecuteClassMacros()
         {
             Hud.Game.Me.Powers.CurrentSkills.ForEach(skill =>
@@ -108,10 +119,8 @@
         
         private bool CharacterCanCast()
         {
-            Hud.Debug($"ingrift: {Hud.Game.SpecialArea}");
-            if (Hud.Game.Quests.FirstOrDefault(quest => quest.SnoQuest.Sno == Hud.Sno.SnoQuests.NephalemRift_337492.Sno) is IQuest riftQuest)
-                if (riftQuest.QuestStepId == 34)
-                    return false;
+            if (ShouldUpGems())
+                return false;
 
 
             return Hud.Game.IsInGame
@@ -125,6 +134,14 @@
                    && !Hud.Game.Me.Powers.BuffIsActive(Hud.Sno.SnoPowers.Generic_TeleportToPlayerCast.Sno)
                    && !Hud.Game.Me.Powers.BuffIsActive(Hud.Sno.SnoPowers.Generic_TeleportToWaypointCast.Sno)
                    && !Hud.Game.Me.Powers.BuffIsActive(Hud.Sno.SnoPowers.Generic_AxeOperateGizmo.Sno);
+        }
+
+        private bool ShouldUpGems()
+        {
+            if (Hud.Game.Quests.FirstOrDefault(quest => quest.SnoQuest.Sno == Hud.Sno.SnoQuests.NephalemRift_337492.Sno) is IQuest riftQuest)
+                return riftQuest.QuestStepId == 34;
+
+            return false;
         }
     }
 }

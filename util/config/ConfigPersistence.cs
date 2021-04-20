@@ -16,11 +16,11 @@
     using Plugins.Patrick.hotkeys;
     using skills;
 
-    public static class Config
+    public static class ConfigPersistence
     {
-        public const string VERSION = "0.9.2-BETA";
-        
-        private const string DEFINITION_BASE_PATH = @"config\phelper\definitions";
+        public const string VERSION = "0.9.3-BETA";
+
+        private const string DEFINITION_BASE_PATH = @"config\phelper\profiles";
         private const string KEYBINDS_CONFIG_PATH = @"config\phelper\keybinds.json";
         private const string HOTKEYS_CONFIG_PATH = @"config\phelper\hotkeys.json";
         private const string AUTO_ACTIONS_CONFIG_PATH = @"config\phelper\autoactions.json";
@@ -93,22 +93,19 @@
                 .ForEach(SaveDefinitionGroupsForSkill);
         }
 
-        public static Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> LoadDefinitions2()
+        public static Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> LoadMasterProfiles()
         {
-            var configProfiles = new Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>>();
-            var profilePaths = Directory.GetDirectories(DEFINITION_BASE_PATH);
-            profilePaths.ForEach(path =>
-            {
-                configProfiles.Add(path.Substring(path.LastIndexOf('\\') + 1), LoadDefinitions(path));
-            });
-            
-            if (configProfiles.Count == 0)
-                configProfiles.Add("Default", new Dictionary<uint, DefinitionGroupsForSkill>());
+            if (!Directory.Exists(DEFINITION_BASE_PATH) || Directory.GetDirectories(DEFINITION_BASE_PATH).Length == 0)
+                return GetDefaultProfile();
 
-            return configProfiles;
+            return Directory.GetDirectories(DEFINITION_BASE_PATH)
+                .ToDictionary(
+                    path => path.Substring(path.LastIndexOf('\\') + 1),
+                    LoadProfile
+                );
         }
 
-        public static Dictionary<uint, DefinitionGroupsForSkill> LoadDefinitions(string path)
+        private static Dictionary<uint, DefinitionGroupsForSkill> LoadProfile(string path)
         {
             var definitions = new Dictionary<uint, DefinitionGroupsForSkill>();
 
@@ -164,7 +161,8 @@
 
         public static void SaveDefinitionGroupsForSkill(DefinitionGroupsForSkill definitionGroupsForSkill)
         {
-            var dirPath = $@"config\phelper\definitions\{definitionGroupsForSkill.configProfileName}\{definitionGroupsForSkill.heroClassName}\{definitionGroupsForSkill.skillName}\";
+            var dirPath =
+                $@"{DEFINITION_BASE_PATH}\{definitionGroupsForSkill.configProfileName}\{definitionGroupsForSkill.heroClassName}\{definitionGroupsForSkill.skillName}\";
             Directory.CreateDirectory(dirPath);
 
             definitionGroupsForSkill.definitionGroups.ForEach(definitionGroup =>
@@ -173,6 +171,37 @@
                     JsonConvert.SerializeObject(definitionGroup, Formatting.Indented)
                 )
             );
+        }
+
+        public static void DeleteSkillDefinitionGroups(DefinitionGroupsForSkill skill)
+        {
+            var dirPath = $@"{DEFINITION_BASE_PATH}\{skill.configProfileName}\{skill.heroClassName}\{skill.skillName}\";
+            var directoryInfo = new DirectoryInfo(dirPath);
+
+            try
+            {
+                directoryInfo.EnumerateFiles().ForEach(file => file.Delete());
+                directoryInfo.Delete(true);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to delete file(s) in path {dirPath}. File(s) is/are probably in use by another process. See log for more info.");
+                Logger.error($"Failed to delete files {dirPath}{Environment.NewLine}{e}");
+            }
+        }
+
+        public static void DeleteDefinitionGroup(DefinitionGroupsForSkill skill, string groupName)
+        {
+            var filePath = $@"{DEFINITION_BASE_PATH}\{skill.configProfileName}\{skill.heroClassName}\{skill.skillName}\{groupName}.json";
+            try
+            {
+                File.Delete(filePath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to delete file: {filePath}. File is probably in use by another process. See log for more info.");
+                Logger.error($"Failed to delete files {filePath}{Environment.NewLine}{e}");
+            }
         }
 
         private static void AddMissingHotkeys(HotkeyContainer hotkeyContainer)
@@ -207,6 +236,14 @@
             return AbstractAutoAction.AutoActionTypes
                 .Select(type => (AbstractAutoAction)Activator.CreateInstance(type))
                 .ToList();
+        }
+
+        private static Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>> GetDefaultProfile()
+        {
+            return new Dictionary<string, Dictionary<uint, DefinitionGroupsForSkill>>
+            {
+                {"Default", new Dictionary<uint, DefinitionGroupsForSkill>()}
+            };
         }
 
         private static Dictionary<int, Keys> GetDefaultKeybinds()

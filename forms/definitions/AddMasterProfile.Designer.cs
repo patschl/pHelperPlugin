@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
 
-    partial class AddConfigProfile
+    partial class AddMasterProfile
     {
         /// <summary>
         /// Required designer variable.
@@ -55,13 +55,13 @@
             // 
             // b_Save
             // 
+            this.b_Save.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.b_Save.Location = new System.Drawing.Point(165, 73);
             this.b_Save.Name = "b_Save";
             this.b_Save.Size = new System.Drawing.Size(93, 28);
             this.b_Save.TabIndex = 2;
             this.b_Save.Text = "Save";
             this.b_Save.UseVisualStyleBackColor = true;
-            this.b_Save.UseWaitCursor = true;
             this.b_Save.Click += new System.EventHandler(this.b_Save_Click);
             // 
             // b_Cancel
@@ -74,7 +74,7 @@
             this.b_Cancel.UseVisualStyleBackColor = true;
             this.b_Cancel.Click += new System.EventHandler(this.b_Cancel_Click);
             // 
-            // AddConfigProfile
+            // AddMasterProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -84,9 +84,11 @@
             this.Controls.Add(this.b_Save);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb_ConfigProfileName);
-            this.Name = "AddConfigProfile";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "AddMasterProfile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Create Config Profile";
+            this.Text = "Create Master Profile";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddMasterProfile_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
