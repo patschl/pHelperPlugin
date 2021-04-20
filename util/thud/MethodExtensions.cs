@@ -30,7 +30,7 @@
 
         public static void Click(this IItem item)
         {
-            InputSimulator.PostMessageMouseClickLeft((int)item.FloorCoordinate.X, (int)item.FloorCoordinate.Y);
+            InputSimulator.PostMessageMouseClickLeft((int)item.FloorCoordinate.ToScreenCoordinate().X, (int)item.FloorCoordinate.ToScreenCoordinate().Y);
         }
 
         public static void Cast(this IPlayerSkill skill)
