@@ -20,12 +20,6 @@
             return new SimpleParameter<T>(attributeName, setter, defaultValue);
         }
 
-        public override ParameterType parameterType
-        {
-            get
-            {
-                return ParameterType.Simple;
-            }
-        }
+        public override ParameterType parameterType => ParameterType.Simple;
     }
 }

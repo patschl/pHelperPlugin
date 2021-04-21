@@ -9,7 +9,6 @@
     using logger;
     using Plugins;
     using Plugins.Patrick.forms;
-    using Plugins.Patrick.util;
 
     public static class RenderControllerFunctions
     {
@@ -61,6 +60,11 @@
                         renderController.RegisterUiElement(path, null, null);
 
             return layer;
+        }
+
+        public static bool IsShopOpen(this IRenderController renderController)
+        {
+            return renderController.IsUiElementVisible(UiPathConstants.Vendor.CURRENCY_TYPE);
         }
     }
 }

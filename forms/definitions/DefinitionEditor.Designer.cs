@@ -39,6 +39,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.label2 = new System.Windows.Forms.Label();
             this.cb_Group = new System.Windows.Forms.ComboBox();
+            this.b_ShowActivePowerOverlay = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cb_DefinitionType
@@ -111,12 +112,23 @@
             this.cb_Group.TabIndex = 6;
             this.cb_Group.SelectedIndexChanged += new System.EventHandler(this.cb_Group_SelectedIndexChanged);
             // 
+            // b_ShowActivePowerOverlay
+            // 
+            this.b_ShowActivePowerOverlay.Location = new System.Drawing.Point(12, 133);
+            this.b_ShowActivePowerOverlay.Name = "b_ShowActivePowerOverlay";
+            this.b_ShowActivePowerOverlay.Size = new System.Drawing.Size(180, 27);
+            this.b_ShowActivePowerOverlay.TabIndex = 8;
+            this.b_ShowActivePowerOverlay.Text = "Show ActivePowerOverlay";
+            this.b_ShowActivePowerOverlay.UseVisualStyleBackColor = true;
+            this.b_ShowActivePowerOverlay.Click += new System.EventHandler(this.b_ShowActivePowerOverlay_Click);
+            // 
             // DefinitionEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(490, 182);
             this.ControlBox = false;
+            this.Controls.Add(this.b_ShowActivePowerOverlay);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cb_Group);
             this.Controls.Add(this.b_Save);
@@ -135,6 +147,7 @@
 
         private System.Windows.Forms.Button b_Cancel;
         private System.Windows.Forms.Button b_Save;
+        private System.Windows.Forms.Button b_ShowActivePowerOverlay;
         private System.Windows.Forms.ComboBox cb_DefinitionType;
         private System.Windows.Forms.ComboBox cb_Group;
         private System.Windows.Forms.CheckBox cb_Inverted;

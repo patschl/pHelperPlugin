@@ -4,6 +4,7 @@
     {
         public static class Buttons
         {
+            public const string START_GAME = "Root.NormalLayer.BattleNetCampaign_main.LayoutRoot.Menu.PlayGameButton";
             public const string LEAVE_GAME = "Root.NormalLayer.gamemenu_dialog.gamemenu_bkgrnd.ButtonStackContainer.button_leaveGame";
             public const string GAME_MENU = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_menu";
             public const string INVENTORY = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_inventory";
@@ -39,6 +40,14 @@
             {
                 public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 58.LayoutRoot.Interest";    
             }
+        }
+
+        public static class Dialogs
+        {
+            public const string QUEST_COMPLETED = "Root.NormalLayer.questreward_dialog";
+            public const string HORADRIC_CACHE = "Root.NormalLayer.BountyReward_main.LayoutRoot";
+            public const string GREATER_RIFT_COMPLETED = "Root.NormalLayer.GreaterRifts_VictoryScreen.LayoutRoot";
+            public const string GREATER_RIFT_INVITE = "Root.NormalLayer.rift_join_party_main.LayoutRoot";
         }
 
         public static class Blacksmith

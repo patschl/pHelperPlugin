@@ -12,6 +12,13 @@
 
     public static class Misc
     {
+        public static void ForEachWithIndex<T>(this IEnumerable<T> enumerable, Action<T, int> action)
+        {
+            var index = 0;
+            foreach (var item in enumerable) 
+                action(item, index++);
+        }
+        
         public static bool AreYouSureDialogConfirmed(string text)
         {
             return MessageBox.Show(text, "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes;

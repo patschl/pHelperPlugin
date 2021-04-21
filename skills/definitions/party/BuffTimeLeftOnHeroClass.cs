@@ -87,7 +87,7 @@
             if (!(playerWithBuff?.Powers?.GetBuff(OverrideSelected ? Sno : SelectedSno) is IBuff buff))
                 return false;
 
-            return CompareWithOperator.Compare((int) (buff.TimeLeftSeconds[IconIndex] * 1000L), TimeLeftInMs, Operator);
+            return !buff.Active || CompareWithOperator.Compare((int) (buff.TimeLeftSeconds[IconIndex] * 1000L), TimeLeftInMs, Operator);
         }
     }
 }

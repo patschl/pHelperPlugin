@@ -28,7 +28,12 @@
 
         public override bool Applicable(IController hud)
         {
-            return hud.Game.IsInTown && hud.Render.IsUiElementVisible(UiPathConstants.Paragon.NEW_PARAGON_BUTTON);
+            return hud.Game.IsInTown 
+                && hud.Render.IsUiElementVisible(UiPathConstants.Paragon.NEW_PARAGON_BUTTON)
+                && !hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.QUEST_COMPLETED) 
+                && !hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.HORADRIC_CACHE)
+                && !hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.GREATER_RIFT_COMPLETED) 
+                && !hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.GREATER_RIFT_INVITE);
         }
 
         public override void Invoke(IController hud)

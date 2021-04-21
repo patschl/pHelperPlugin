@@ -9,6 +9,8 @@
         public string heroClassName { get; }
         
         public string skillName { get; }
+        
+        public string configProfileName { get; }
 
         public List<DefinitionGroup> definitionGroups { get; }
 
@@ -18,12 +20,13 @@
             definitionGroups = new List<DefinitionGroup>();
         }
 
-        public DefinitionGroupsForSkill(string heroClassName, string skillName)
+        public DefinitionGroupsForSkill(string heroClassName, string skillName, string configProfileName)
         {
             active = true;
             definitionGroups = new List<DefinitionGroup>();
             this.heroClassName = heroClassName;
             this.skillName = skillName;
+            this.configProfileName = configProfileName;
         }
     }
 }

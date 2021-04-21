@@ -13,7 +13,11 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
     public class AutoItemPickup : AbstractAutoAction
     {
         public bool CraftingMats { get; set; }
+        
         public bool Legendaries { get; set; }
+        
+        public bool Jewels { get; set; }
+            
         public int PickupRange { get; set; } = 10;
 
         [JsonIgnore]
@@ -47,6 +51,7 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
             {
                 SimpleParameter<bool>.of(nameof(CraftingMats), x => CraftingMats = x),
                 SimpleParameter<bool>.of(nameof(Legendaries), x => Legendaries = x),
+                SimpleParameter<bool>.of(nameof(Jewels), x => Jewels = x),
                 SimpleParameter<int>.of(nameof(PickupRange), x => PickupRange = x),
             };
         }
@@ -55,15 +60,15 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
         {
             CheckInventorySpace(hud);
 
-            return hud.Game.Me.IsInGame && !hud.Game.Me.IsDead && hud.Game.Items.ToList().Any(item => item.CentralXyDistanceToMe < PickupRange);
+            return hud.Game.Me.IsInGame && !hud.Game.Me.IsDead && hud.Game.Items.ToList().Any(item => item.CentralXyDistanceToMe < PickupRange && !item.AccountBound && !item.SeenInInventory);
         }
 
         public override void Invoke(IController hud)
         {
             hud.Game.Items.ToList()
-                .Where(x => x.Location == ItemLocation.Floor && Matches(x) && x.CentralXyDistanceToMe < PickupRange)
+                .Where(x => x.Location == ItemLocation.Floor && Matches(x) && x.CentralXyDistanceToMe < PickupRange && !x.AccountBound && !x.SeenInInventory)
                 .OrderBy(x => x.CentralXyDistanceToMe)
-                .First(item => !item.IsLegendary || (item.SnoItem.ItemHeight == 1 && hud.Game.Me.InventorySpaceTotal - hud.Game.InventorySpaceUsed > 1) || twoUnitSlotAvailable)?.Click();
+                .FirstOrDefault(item => !item.IsLegendary || (item.SnoItem.ItemHeight == 1 && hud.Game.Me.InventorySpaceTotal - hud.Game.InventorySpaceUsed > 1) || twoUnitSlotAvailable)?.Click();
         }
 
         private bool Matches(IItem item)
@@ -75,7 +80,10 @@ namespace Turbo.plugins.patrick.autoactions.actions.rift
 
             if (Legendaries)
                 matches |= item.IsLegendary;
-            
+
+            if (Jewels)
+                matches |= item.SnoItem.Kind == ItemKind.gem;
+
             return matches;
         }
 

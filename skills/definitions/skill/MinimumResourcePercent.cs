@@ -27,7 +27,7 @@
             var resourcePercent = resourceType == PowerResourceCostType.primary
                 ? hud.Game.Me.Stats.ResourcePctPri
                 : hud.Game.Me.Stats.ResourcePctSec;
-
+            
             return resourcePercent >= minimumResourcePercent;
         }
     }

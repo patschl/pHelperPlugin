@@ -8,17 +8,6 @@
 
     public class CoeRotation : AbstractDefinition
     {
-        [JsonIgnore] private static readonly Dictionary<string, int> CoeElementToIndex = new Dictionary<string, int>
-        {
-            {"Cold", 1},
-            {"Arcane", 2},
-            {"Fire", 3},
-            {"Holy", 4},
-            {"Lightning", 5},
-            {"Physical", 6},
-            {"Poison", 7}
-        };
-
         public string Element { get; set; }
         
         public int TimeLeft { get; set; }
@@ -34,7 +23,7 @@
                 ContextParameter.of(
                     nameof(Element),
                     x => Element = (string)x,
-                    CoeElementToIndex.Keys
+                    SnoPowerList.CoeElementToIndex.Keys
                 ),
                 SimpleParameter<int>.of(nameof(TimeLeft), x => TimeLeft = x, 4000)
             };
@@ -46,7 +35,7 @@
                 return false;
 
             var buff = hud.Game.Me.Powers.GetBuff(hud.Sno.SnoPowers.ConventionOfElements.Sno);
-            var elementIndex = CoeElementToIndex[Element];
+            var elementIndex = SnoPowerList.CoeElementToIndex[Element];
             if (buff.IconCounts[elementIndex] == 0)
                 return false;
 
