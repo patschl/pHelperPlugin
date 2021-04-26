@@ -69,10 +69,11 @@
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
-            if (!(hud.Game.Me.Powers.GetBuff(OverrideSelected ? Sno : SelectedSno) is IBuff buff))
-                return false;
+            var stacks = hud.Game.Me.Powers.GetBuff(OverrideSelected ? Sno : SelectedSno) is IBuff buff
+                ? buff.IconCounts[IconIndex]
+                : 0;
 
-            return CompareWithOperator.Compare(buff.IconCounts[IconIndex], Stacks, Operator);
+            return CompareWithOperator.Compare(stacks, Stacks, Operator);
         }
     }
 }

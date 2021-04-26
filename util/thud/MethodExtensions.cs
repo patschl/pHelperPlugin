@@ -1,6 +1,8 @@
 ﻿namespace Turbo.plugins.patrick.util.thud
 {
     using System.Drawing;
+    using System.Windows.Forms;
+    using diablo;
     using input;
     using Plugins.Patrick.forms;
     using Plugins.Patrick.util;
@@ -18,6 +20,12 @@
             uiElement.Rectangle.RightClick();
         }
 
+        public static void Click(this IClickableActor shrine, Point offset)
+        {
+            var s = shrine.ScreenCoordinate;
+            InputSimulator.PostMessageClickWithMouseMove(Keys.LButton, new Point((int)s.X + offset.X, (int)s.Y + offset.Y));
+        }
+
         public static void Click(this RectangleF rectangleF)
         {
             InputSimulator.PostMessageMouseClickLeft(rectangleF.GetCenter());
@@ -30,7 +38,12 @@
 
         public static void Click(this IItem item)
         {
-            InputSimulator.PostMessageMouseClickLeft((int)item.FloorCoordinate.ToScreenCoordinate().X, (int)item.FloorCoordinate.ToScreenCoordinate().Y);
+            item.ScreenCoordinate.Click();
+        }
+
+        public static void Click(this IScreenCoordinate coordinate)
+        {
+            InputSimulator.PostMessageMouseClickLeft((int)coordinate.X, (int)coordinate.Y);            
         }
 
         public static void Cast(this IPlayerSkill skill)

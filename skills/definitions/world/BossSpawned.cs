@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using parameters;
-    using parameters.types;
     using Plugins;
 
     public class BossIsSpawned : AbstractDefinition
@@ -19,7 +18,7 @@
 
         protected override bool Applicable(IController hud, IPlayerSkill skill)
         {
-            return hud.Game.Monsters.Any(monster => monster.Rarity == ActorRarity.Boss);
+            return hud.Game.Monsters.Any(monster => monster.Rarity == ActorRarity.Boss && !monster.Untargetable);
         }
     }
 }

@@ -9,36 +9,49 @@
             public const string GAME_MENU = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_menu";
             public const string INVENTORY = "Root.NormalLayer.game_dialog_backgroundScreenPC.button_inventory";
         }
-        
+
         public static class WaitpointMap
         {
             public const string ZOOM_OUT = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.Zoom.ZoomOut";
 
-            public const string ACT_ONE = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act1Open.LayoutRoot.Interest";
-            public const string ACT_TWO = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act2Open.LayoutRoot.Interest";
-            public const string ACT_THREE = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act3Open.LayoutRoot.Interest";
-            public const string ACT_FOUR = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act4Open.LayoutRoot.Interest";
-            public const string ACT_FIVE = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act5Open.LayoutRoot.Interest";
-            
+            public const string ACT_ONE =
+                "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act1Open.LayoutRoot.Interest";
+
+            public const string ACT_TWO =
+                "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act2Open.LayoutRoot.Interest";
+
+            public const string ACT_THREE =
+                "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act3Open.LayoutRoot.Interest";
+
+            public const string ACT_FOUR =
+                "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act4Open.LayoutRoot.Interest";
+
+            public const string ACT_FIVE =
+                "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.WorldMap.Act5Open.LayoutRoot.Interest";
+
             public static class ActOne
             {
-                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 0.LayoutRoot.Interest";    
+                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 0.LayoutRoot.Interest";
             }
+
             public static class ActTwo
             {
-                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 19.LayoutRoot.Interest";    
+                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 19.LayoutRoot.Interest";
             }
+
             public static class ActThree
             {
-                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 30.LayoutRoot.Interest";    
+                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 30.LayoutRoot.Interest";
             }
+
             public static class ActFour
             {
-                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 44.LayoutRoot.Interest";    
+                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 44.LayoutRoot.Interest";
             }
+
             public static class ActFive
             {
-                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 58.LayoutRoot.Interest";    
+                public const string TOWN = "Root.NormalLayer.WaypointMap_main.LayoutRoot.OverlayContainer.POI.entry 58.LayoutRoot.Interest";
             }
         }
 
@@ -53,17 +66,36 @@
         public static class Blacksmith
         {
             public const string UNIQUE_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_4";
-            
+
             public const string SALVAGE_PAGE = "Root.NormalLayer.vendor_dialog_mainPage.tab_2";
             public const string SALVAGE_DIALOG = "Root.TopLayer.confirmation.subdlg";
             public const string SALVAGE_DIALOG_OK = "Root.TopLayer.confirmation.subdlg.stack.wrap.button_ok";
-            
+
             public const string VENDOR_SALVAGE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper";
 
             public const string ANVIL = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_button";
-            public const string SALVAGE_RARE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_rare_button";
-            public const string SALVAGE_BLUE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_magic_button";
-            public const string SALVAGE_WHITE = "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_normal_button";
+
+            public const string SALVAGE_RARE =
+                "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_rare_button";
+
+            public const string SALVAGE_BLUE =
+                "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_magic_button";
+
+            public const string SALVAGE_WHITE =
+                "Root.NormalLayer.vendor_dialog_mainPage.salvage_dialog.salvage_all_wrapper.salvage_normal_button";
+        }
+
+        public static class KanaisCube
+        {
+            public const string RECIPES = "Root.NormalLayer.Kanais_Recipes_main";
+
+            public const string FILL_BUTTON = "Root.NormalLayer.Kanais_Recipes_main.LayoutRoot.button_fill_currencies";
+            public const string CLOSE_BUTTON = "Root.NormalLayer.Kanais_Recipes_main.LayoutRoot.button_exit";
+            public const string TRANSMUTE_BUTTON = "Root.NormalLayer.vendor_dialog_mainPage.transmute_dialog.LayoutRoot.transmute_button";
+
+            public const string NEXT_PAGE_BUTTON = "Root.NormalLayer.Kanais_Recipes_main.LayoutRoot.PageControls.page_next";
+            public const string PREVIOUS_PAGE_BUTTON = "Root.NormalLayer.Kanais_Recipes_main.LayoutRoot.PageControls.page_previous";
+            public const string PAGE_NUMBER = "Root.NormalLayer.Kanais_Recipes_main.LayoutRoot.PageControls.page_number";
         }
 
         public static class Ui
@@ -76,15 +108,17 @@
             public const string OBELISK_WINDOW = "Root.NormalLayer.rift_dialog_mainPage";
             public const string NORMAL_RIFT_BUTTON = "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.RiftRadioButtons.NephalemRiftButton";
             public const string GREATER_RIFT_BUTTON = "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.RiftRadioButtons.GreaterRiftButton";
+
             public const string EMPOWERED_CHECKBOX =
                 "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.EmpoweredRiftToggleWrapper.EmpoweredRiftToggle.box";
+
             public const string ACCEPT_BUTTON = "Root.NormalLayer.rift_dialog_mainPage.LayoutRoot.accept_Button";
         }
 
         public static class Paragon
         {
             public const string NEW_PARAGON_BUTTON = "Root.NormalLayer.game_notify_dialog_backgroundScreen.dlg_new_paragon.button";
-            
+
             public const string PARAGON_TAB_CORE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_1";
             public const string PARAGON_TAB_OFFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_2";
             public const string PARAGON_TAB_DEFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.tab_3";
@@ -95,14 +129,26 @@
             public const string PARAGON_UNSPENT_DEFENSE = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_3";
             public const string PARAGON_UNSPENT_UTILITY = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Points_Available_4";
 
-            public const string PARAGON_BUTTON_FIRST = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus0.IncreaseStat";
-            public const string PARAGON_BUTTON_SECOND = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus1.IncreaseStat";
-            public const string PARAGON_BUTTON_THIRD = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus2.IncreaseStat";
-            public const string PARAGON_BUTTON_FOURTH =  "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus3.IncreaseStat";
+            public const string PARAGON_BUTTON_FIRST =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus0.IncreaseStat";
 
-            public const string PARAGON_BUTTON_RESET =  "Root.NormalLayer.SkillPane_main.LayoutRoot.ParagonPointSelect.ResetParagonPointsButton";
-            public const string PARAGON_BUTTON_ACCEPT = "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.AcceptParagonPointsButton";
-            public const string PARAGON_BUTTON_CLOSE =  "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.CancelParagonPointsButton";
+            public const string PARAGON_BUTTON_SECOND =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus1.IncreaseStat";
+
+            public const string PARAGON_BUTTON_THIRD =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus2.IncreaseStat";
+
+            public const string PARAGON_BUTTON_FOURTH =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.Bonuses.bonus3.IncreaseStat";
+
+            public const string PARAGON_BUTTON_RESET =
+                "Root.NormalLayer.SkillPane_main.LayoutRoot.ParagonPointSelect.ResetParagonPointsButton";
+
+            public const string PARAGON_BUTTON_ACCEPT =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.AcceptParagonPointsButton";
+
+            public const string PARAGON_BUTTON_CLOSE =
+                "Root.NormalLayer.Paragon_main.LayoutRoot.ParagonPointSelect.CancelParagonPointsButton";
         }
 
         public static class Vendor

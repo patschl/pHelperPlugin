@@ -27,8 +27,10 @@
 
             var eliteTargeted = selectedMonster.Rarity == ActorRarity.Champion || selectedMonster.Rarity == ActorRarity.Rare ||
                                 selectedMonster.Rarity == ActorRarity.Unique || selectedMonster.Rarity == ActorRarity.Boss;
+
+            eliteTargeted |= IncludeShocktower && selectedMonster.SnoActor.Sno == ActorSnoEnum._x1_pand_ext_ordnance_tower_shock_a;
             
-            return eliteTargeted || (IncludeShocktower && hud.Game.AliveMonsters.Any(monster => monster.SnoActor.Sno == ActorSnoEnum._x1_pand_ext_ordnance_tower_shock_a));
+            return eliteTargeted;
         }
     }
 }

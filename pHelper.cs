@@ -104,10 +104,13 @@
 
         private void ExecuteQolMacro()
         {
-            if (!Hud.Game.IsInTown || (!Hud.Render.IsShopOpen() && !Hud.Inventory.StashMainUiElement.Visible))
+            if (!Hud.Game.IsInTown || Hud.Render.IsUiElementVisible(UiPathConstants.Blacksmith.UNIQUE_PAGE) || (!Hud.Render.IsShopOpen() && !Hud.Inventory.StashMainUiElement.Visible && !Hud.Window.CursorInsideRect(Hud.Inventory.InventoryMainUiElement.Rectangle)))
                 InputSimulator.PostMessageMouseClickLeft(Hud.Window.CursorX, Hud.Window.CursorY);
-            else if (Hud.Inventory.HoveredItem != null)
-                Hud.Inventory.GetItemRect(Hud.Inventory.HoveredItem).RightClick();
+            else if (Hud.Inventory.HoveredItem != null && !Hud.Render.IsUiElementVisible(UiPathConstants.Blacksmith.SALVAGE_DIALOG))
+                if (Hud.Window.CursorInsideRect(Hud.Inventory.InventoryMainUiElement.Rectangle) && Hud.Inventory.HoveredItem.Location == ItemLocation.Inventory)
+                    Hud.Inventory.GetItemRect(Hud.Inventory.HoveredItem).RightClick();
+                else if (Hud.Window.CursorInsideRect(Hud.Inventory.StashMainUiElement.Rectangle) && Hud.Inventory.HoveredItem.Location == ItemLocation.Stash)
+                    Hud.Inventory.GetItemRect(Hud.Inventory.HoveredItem).RightClick();
         }
 
         private void ExecuteClassMacros()
@@ -121,8 +124,7 @@
         {
             if (ShouldUpGems())
                 return false;
-
-
+            
             return Hud.Game.IsInGame
                    && !Hud.Game.IsInTown
                    && !Hud.Game.IsLoading

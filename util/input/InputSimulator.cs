@@ -25,12 +25,11 @@
         private const uint WM_XBUTTONUP = 0x020C;
 
 
-        
         public static bool PostMessageKeyPress(string key)
         {
             return PressKey(InputUtil.StringToVkCode(key));
         }
-        
+
         public static bool PressKey(Keys key)
         {
             var success = PostMessageKeyDown(key);
@@ -51,11 +50,11 @@
                 return User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_KEYDOWN, (int)vkcode, 0);
             }
 
+            var currentCursorPositionInGame = GetCurrentCursorPositionInGame();
             switch (vkcode)
             {
                 case Keys.LButton:
                 {
-                    var currentCursorPositionInGame = GetCurrentCursorPositionInGame();
                     PostMessageKeyDown(Settings.Keybinds[(int)ActionKey.Unknown]);
                     var success = User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_LBUTTONDOWN,
                         User32.MK_LBUTTON,
@@ -65,31 +64,27 @@
                 }
                 case Keys.RButton:
                 {
-                    var currentCursorPositionInGame2 = GetCurrentCursorPositionInGame();
                     return User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_RBUTTONDOWN,
                         User32.MK_RBUTTON,
-                        ConvertPositionToLparam(currentCursorPositionInGame2.X, currentCursorPositionInGame2.Y));
+                        ConvertPositionToLparam(currentCursorPositionInGame.X, currentCursorPositionInGame.Y));
                 }
                 case Keys.MButton:
                 {
-                    var currentCursorPositionInGame3 = GetCurrentCursorPositionInGame();
                     return User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_MBUTTONDOWN,
                         User32.MK_MBUTTON,
-                        ConvertPositionToLparam(currentCursorPositionInGame3.X, currentCursorPositionInGame3.Y));
+                        ConvertPositionToLparam(currentCursorPositionInGame.X, currentCursorPositionInGame.Y));
                 }
                 case Keys.XButton1:
                 {
-                    var currentCursorPositionInGame3 = GetCurrentCursorPositionInGame();
                     return User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_XBUTTONDOWN,
                         User32.MK_XBUTTON1,
-                        ConvertPositionToLparam(currentCursorPositionInGame3.X, currentCursorPositionInGame3.Y));
+                        ConvertPositionToLparam(currentCursorPositionInGame.X, currentCursorPositionInGame.Y));
                 }
                 case Keys.XButton2:
                 {
-                    var currentCursorPositionInGame3 = GetCurrentCursorPositionInGame();
                     return User32.PostMessage(D3Client.GetHandle().MainWindowHandle, WM_XBUTTONDOWN,
                         User32.MK_XBUTTON2,
-                        ConvertPositionToLparam(currentCursorPositionInGame3.X, currentCursorPositionInGame3.Y));
+                        ConvertPositionToLparam(currentCursorPositionInGame.X, currentCursorPositionInGame.Y));
                 }
             }
 
@@ -159,26 +154,45 @@
             return PostMessageKeyPress(InputUtil.StringToVkCode(key), x, y);
         }
 
-        public const int CLICK_DELAY_AFTER_MOUSE_MOVE = 15;
-
-        public static bool PostMouseMove( int x, int y)
+        public static void PostMouseMove(Point point)
         {
-            var oldMousePos = GetCurrentCursorPositionInGame();
+            SetCursorPosition(point);
+        }
+
+        public static bool PostMouseMove(int x, int y)
+        {
             SetCursorPosition(new Point(x, y));
 
             return true;
         }
 
+        public const int CLICK_DELAY_AFTER_MOUSE_MOVE = 18;
+
+        public static bool PostMessageClickWithMouseMove(Keys key, IScreenCoordinate coordinate)
+        {
+            return PostMessageClickWithMouseMove(key, new Point((int)coordinate.X, (int)coordinate.Y));
+        }
+
         public static bool PostMessageClickWithMouseMove(string key, int x, int y)
         {
+            return PostMessageClickWithMouseMove(InputUtil.StringToVkCode(key), new Point(x, y));
+        }
+
+        public static bool PostMessageClickWithMouseMove(Keys key, Point point)
+        {
             var oldMousePos = GetCurrentCursorPositionInGame();
-            SetCursorPosition(new Point(x, y));
+            SetCursorPosition(point);
 
             Thread.Sleep(CLICK_DELAY_AFTER_MOUSE_MOVE);
 
-            var success = PostMessageKeyPress(key, x, y);
+            var success = PostMessageKeyPress(key, point);
             SetCursorPosition(oldMousePos);
             return success;
+        }
+
+        public static bool PostMessageKeyPress(Keys keys, Point point)
+        {
+            return PostMessageKeyPress(keys, point.X, point.Y);
         }
 
         public static bool PostMessageKeyPress(Keys vkcode, int x, int y)

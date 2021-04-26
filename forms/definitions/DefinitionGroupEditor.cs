@@ -5,6 +5,7 @@
     using System.Windows.Forms;
     using Plugins;
     using skills;
+    using util.thud;
     using util.winformutil;
 
     public partial class DefinitionGroupEditor : Form
@@ -70,14 +71,20 @@
                 return;
 
             e.Cancel = true;
-            dgv_Definitions.Rows.Clear();
-            Hide();
+            
+            b_Close.PerformClick();
         }
 
         private void b_Close_Click(object sender, EventArgs e)
         {
             dgv_Definitions.Rows.Clear();
+            HideActivePowerOverlay();
             Hide();
+        }
+
+        private void HideActivePowerOverlay()
+        {
+            hud.TogglePlugin<ActivePowerOverlay>(false);
         }
 
         private void ReloadDefinitions()
