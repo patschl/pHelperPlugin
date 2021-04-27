@@ -20,18 +20,20 @@
 
         public override bool Applicable(IController hud)
         {
-            var portal = hud.Game.Portals.First();
-            var portalTarget = portal.TargetArea.NameEnglish;
+            if(hud.Game.Portals.Count() == 0)
+                return false;
+            var closestPortal = hud.Game.Portals.OrderBy(portal => portal.CentralXyDistanceToMe).First();
+            var portalTarget = closestPortal.TargetArea.NameEnglish;
             var currentPosition = hud.Game.Me.SnoArea.NameEnglish;
             return !hud.Game.Me.IsDead 
                 && (hud.Game.SpecialArea == SpecialArea.GreaterRift || hud.Game.SpecialArea == SpecialArea.Rift)
-                && portal.CentralXyDistanceToMe <= 16 
+                && closestPortal.CentralXyDistanceToMe <= 16 
                 && portalTarget.Last() > currentPosition.Last();
         }
 
         public override void Invoke(IController hud)
         {
-            hud.Game.Portals.First().Click(hud.Window.Offset);
+            hud.Game.Portals.OrderBy(portal => portal.CentralXyDistanceToMe).First().Click(hud.Window.Offset);
         }
     }
 }
