@@ -26,6 +26,12 @@
             InputSimulator.PostMessageClickWithMouseMove(Keys.LButton, new Point((int)s.X + offset.X, (int)s.Y + offset.Y));
         }
 
+        public static void Click(this IPortal portal, Point offset)
+        {
+            var s = portal.ScreenCoordinate;
+            InputSimulator.PostMessageClickWithMouseMove(Keys.LButton, new Point((int)s.X + offset.X, (int)s.Y + offset.Y));
+        }
+
         public static void Click(this RectangleF rectangleF)
         {
             InputSimulator.PostMessageMouseClickLeft(rectangleF.GetCenter());
