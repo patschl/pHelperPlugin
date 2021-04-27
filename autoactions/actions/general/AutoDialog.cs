@@ -23,8 +23,8 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
         public override bool Applicable(IController hud)
         {
             return hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.CONVERSATION_CLOSE_BUTTON) 
-            || hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.QUEST_COMPLETED_CLOSE_BUTTON) 
-            || hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.HORADRIC_CACHE_CLOSE_BUTTON);
+                || hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.QUEST_COMPLETED_CLOSE_BUTTON) 
+                || hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.HORADRIC_CACHE_CLOSE_BUTTON);
         }
 
         public override void Invoke(IController hud)
