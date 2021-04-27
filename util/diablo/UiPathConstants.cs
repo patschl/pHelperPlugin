@@ -58,9 +58,12 @@
         public static class Dialogs
         {
             public const string QUEST_COMPLETED = "Root.NormalLayer.questreward_dialog";
+            public const string QUEST_COMPLETED_CLOSE_BUTTON = "Root.NormalLayer.questreward_dialog.button_exit";
             public const string HORADRIC_CACHE = "Root.NormalLayer.BountyReward_main.LayoutRoot";
+            public const string HORADRIC_CACHE_CLOSE_BUTTON = "Root.NormalLayer.BountyReward_main.LayoutRoot.button_exit";
             public const string GREATER_RIFT_COMPLETED = "Root.NormalLayer.GreaterRifts_VictoryScreen.LayoutRoot";
             public const string GREATER_RIFT_INVITE = "Root.NormalLayer.rift_join_party_main.LayoutRoot";
+            public const string CONVERSATION_CLOSE_BUTTON = "Root.NormalLayer.conversation_dialog_main.button_close";
         }
 
         public static class Blacksmith
