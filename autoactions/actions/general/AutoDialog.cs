@@ -35,8 +35,8 @@ namespace Turbo.plugins.patrick.autoactions.actions.town
             if(hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.QUEST_COMPLETED_CLOSE_BUTTON))
                 hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Dialogs.QUEST_COMPLETED_CLOSE_BUTTON);
 
-            if(hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.CONVERSATION_CLOSE_BUTTON))
-                hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Dialogs.CONVERSATION_CLOSE_BUTTON);
+            if(hud.Render.IsUiElementVisible(UiPathConstants.Dialogs.HORADRIC_CACHE_CLOSE_BUTTON))
+                hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Dialogs.HORADRIC_CACHE_CLOSE_BUTTON);
         }
     }
 }
