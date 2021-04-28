@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System;
     using parameters;
     using parameters.types;
     using Plugins;
@@ -28,6 +29,7 @@
             return !hud.Game.Me.IsDead 
                 && (hud.Game.SpecialArea == SpecialArea.GreaterRift || hud.Game.SpecialArea == SpecialArea.Rift)
                 && closestPortal.CentralXyDistanceToMe <= 16 
+                && Char.IsDigit(portalTarget.Last())
                 && portalTarget.Last() > currentPosition.Last();
         }
 
