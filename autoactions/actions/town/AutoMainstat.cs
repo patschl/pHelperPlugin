@@ -46,6 +46,7 @@
             if (amountOfClicks == 0)
             {
                 hud.Render.WaitForVisiblityAndClickOrAbortHotkeyEvent(UiPathConstants.Paragon.PARAGON_BUTTON_CLOSE);
+                return;
             }
 
             InputSimulator.PostMessageKeyDown(Keys.ControlKey);
