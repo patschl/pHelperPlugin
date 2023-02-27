@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <BaseOutputPath>$(TEMP)\pHelperBin</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(TEMP)\pHelperObj</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Default\BasePlugin\BasePlugin.cs" Link="BasePlugin.cs" />
+    <Compile Include="..\Default\BasePlugin\ValueFormat.cs" Link="ValueFormat.cs" />
+    <Compile Include="..\Default\Extensions\LinqExtensions.cs" Link="LinqExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\..\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>..\..\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>..\..\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DirectInput">
+      <HintPath>..\..\SharpDX.DirectInput.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>..\..\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics">
+      <HintPath>..\..\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Turbo.Plugins">
+      <HintPath>..\..\Turbo.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="Turbo.SNO">
+      <HintPath>..\..\Turbo.SNO.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
